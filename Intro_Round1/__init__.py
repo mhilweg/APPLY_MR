@@ -288,6 +288,11 @@ class Instructions(MyBasePage):
     def is_displayed(player: Player):
         return player.Allowed == 1
 
+class Round_1_instructions(MyBasePage):
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.Allowed == 1
 
 class Round_1_begin(Page):
     @staticmethod
@@ -436,12 +441,10 @@ page_sequence = [Welcome,
                  Aboutyou,
                  Instructions,
                  Round_1_instructions,
-                 Comprehension_check_1,
-                 Comprehension_check_2,
                  Round_1_begin,
-                 Round_1_play_easy,
-                 Round_1_play_hard,
-                 #Round_1_play,
+                Round_1_play_easy,
+                Round_1_play_hard,
+                 Round_1_play,
                  Disallowed1,
                  Disallowed2,
                  Redirect
