@@ -250,7 +250,7 @@ class AI_catch(Page):
     def before_next_page(player: Player, timeout_happened=False):
 
         if player.honeypot != "":
-            player.Allowed == 0
+            player.Allowed = 0
 
 class Aboutyou(Page):
     form_model = 'player'
