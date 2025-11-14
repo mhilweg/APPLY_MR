@@ -11,40 +11,35 @@
 
   <!-- Header -->
   <div class="section-header text-center">
-    <h3>🤺 Round 2</h3>
+    <h3>Selection Instructions</h3>
     <hr class="section-divider">
   </div>
 
-  <!-- Intro & Timer -->
+  <!-- The context-->
   <div class="section-box-nonhover box-white">
     <div class="section-header">
       <p>
-       You will have <strong>2 minutes</strong> to find as many matching pairs as possible.
-      </p>
-      <p>
-        <strong>Your Group</strong><br>
-        For this round and all subsequent rounds, you will be <strong>matched with 3 other participants</strong>
-        to form a group. Your group consists of two female and two male Prolific users, including you. 
-      </p>
+       The four participants performed in two rounds. In round 1, they had 2 minutes to find as many
+        matches as possible among sets of mixed difficulty. They were each randomly allocated a mix
+        of either 30% easy and 70% hard sets or 70% easy and 30% hard sets.
+        Hence in this round they had to find matching pairs in sets which are drawn from one of two mixes
 
-      <!--<center>
-        <img src="{% static 'graphics/Your_group_neutral.png' %}" height="250px"><br>
-      </center>-->
-      <p>
-        <strong>Mixes</strong><br>
-        For this round you will have to find matching pairs in sets which are drawn from one of two mixes.
-        <ol>
+      <ol>
           <strong>Mix 1:</strong> 6 easy and 2 hard matching pairs.
         </ol>
         <ol>
           <strong>Mix 2:</strong> 2 easy and 6 hard matching pairs.
         </ol>
-        <p style="text-align: center;"><strong>In round 2, you will face sets either only from Mix 1 or only from Mix 2.</strong></p>
+
       </p>
-      <p>
-        The computer will conduct the equivalent of a coin flip for each participant in your group to determine whether
-        they face sets from <strong>Mix 1</strong> or <strong>Mix 2</strong>.
-      </p>
+
+<!--      SHOW VISUALS of MIX1 and MIX2-->
+
+
+      <!--<center>
+        <img src="{% static 'graphics/Your_group_neutral.png' %}" height="250px"><br>
+      </center>-->
+
     </div>
   </div>
 
@@ -60,21 +55,24 @@
     </div>
   </div>
 
+  <p>
+    In round 2, the participants had 2 minutes to find as many matching pairs as possible among
+    <strong>only hard sets</strong>.
+  </p>
+
   <!-- Payment Rule Change -->
   <div class="section-box box-warn">
     <div class="section-header">
-      <h4>💰 Payment rule for round 2</h4>
+      <h4>💰 Your job and your payment</h4>
 
-        If this round is randomly chosen for your bonus, your payment will depend on both <strong>your score</strong> and your <strong>group’s scores</strong>.
+      You will see the final score each worker achieved in round 1 but you will not the mix of sets that they faced in that round
+      (in other words, the score could have been achieved through mostly easy sets or mostly hard sets).
+      Your task is to select one of these participants.
+      You will then earn £1 if you selected the best performer (i.e. the worker with the highest score) in round 2, where workers faced sets containing only hard pairs.
 
-      <ul>
-        <li>You will earn £{{ tournament_rate1 }} per point you score (i.e. matching pair you find)
-          <strong>if you have the highest score in the group</strong>.</li><!--make this dynamic-->
-        <li>You will earn £0.00 for this round otherwise</li>
-        <li>If there is a tie, the winner will be chosen randomly.</li>
-      </ul>
-      You will not be informed of your ranking until the end of the study.<br><br>
-      <p style="text-align:center;"><em >Please do not use calculators or AI tools during this study.</em></p>
+      <br>
+      You will face five different group of workers. For each group you will be asked to select one worker.
+      At the end of the study one of your choices will be randomly selected to determine your bonus.
     </div>
   </div>
 
