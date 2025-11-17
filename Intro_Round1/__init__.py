@@ -436,6 +436,12 @@ class Redirect(Page):
             player.subsession.session.config['completionlinkdisallowed']
         )
 
+
+class Practice_Score(Page):
+    pass
+# TBU !
+
+
 page_sequence = [Welcome,
                  AI_catch,
                  Aboutyou,
@@ -444,6 +450,7 @@ page_sequence = [Welcome,
                  Round_1_begin,
                 Round_1_play_easy,
                 Round_1_play_hard,
+                 Practice_Score,
                  # Round_1_play,
                  Disallowed1,
                  Disallowed2,
