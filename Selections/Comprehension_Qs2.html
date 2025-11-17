@@ -38,9 +38,9 @@
   <form method="post">
 
       <div class="qa-box">
-  <h4>1. From which mix were your sets drawn during Round 2?</h4>
+  <h4>1. From which mix were sets that worker faced during Round 1?</h4>
         {{ if player.CQ1_incorrect == 1 }}<font color="#FF0000">Your answer question 1 was incorrect.
-        You faced sets from the set containing mostly
+        Workers faced sets from the mix containing mostly
         {{ if player.Round2_Mix == 1 }}easy{{ endif }}
         {{ if player.Round2_Mix == 2 }}hard{{ endif }}
          cards.</font> {{ endif }}

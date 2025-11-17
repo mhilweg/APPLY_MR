@@ -444,7 +444,7 @@ page_sequence = [Welcome,
                  Round_1_begin,
                 Round_1_play_easy,
                 Round_1_play_hard,
-                 Round_1_play,
+                 # Round_1_play,
                  Disallowed1,
                  Disallowed2,
                  Redirect
