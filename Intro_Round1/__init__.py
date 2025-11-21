@@ -450,7 +450,7 @@ page_sequence = [Welcome,
                  Round_1_begin,
                 Round_1_play_easy,
                 Round_1_play_hard,
-                 # Practice_Score,
+                 Practice_Score,
                  Disallowed1,
                  Disallowed2,
                  Redirect

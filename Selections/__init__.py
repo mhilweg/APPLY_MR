@@ -81,6 +81,8 @@ class Player(BasePlayer):
         label='R3 Payment Rule Choice'
     )  #
 
+    # Comprehension check question
+
     CQ1 = models.IntegerField(
         choices=[
             [1, '0 %'],
@@ -165,7 +167,7 @@ class Selections_instructions(MyBasePage):
         player.participant.R2_mix = mix_draw
 
         player.incentivised_selection = random.randint(1,5)
-        player.participant.incentivsised_selection = player.incentivised_selection
+        player.participant.incentivised_selection = player.incentivised_selection
 
 
 class Comprehension_Qs(MyBasePage):
