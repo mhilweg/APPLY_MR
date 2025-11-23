@@ -61,6 +61,7 @@ class Player(BasePlayer):
         ]
     )
 
+    incentivised_selection = models.IntegerField()
     Selection1 = models.IntegerField()
     Selection2 = models.IntegerField()
     Selection3 = models.IntegerField()
@@ -83,12 +84,15 @@ class Player(BasePlayer):
 
     # Comprehension check question
 
+    # In class Player:
+
     CQ1 = models.IntegerField(
         choices=[
-            [1, '0 %'],
-            [2, '50 %'],
+            [1, 'Mix 1 only'],
+            [2, 'Mix 2 only'],
+            [3, 'Either Mix 1 or Mix 2'],
         ],
-        label='Mix',
+        label='In round 1, which mix could a participant have received?',
         widget=widgets.RadioSelect
     )
     CQ1_incorrect = models.IntegerField(initial=0)
@@ -96,15 +100,27 @@ class Player(BasePlayer):
 
     CQ2 = models.IntegerField(
         choices=[
-            [1, 'Mix 1'],
-            [2, 'Mix 2'],
-            [3, 'Either Mix 1 or Mix 2 depending on their individual coin flip']
+            [1, 'Yes, I will see which mix each participant received'],
+            [2, 'No, I will only see their round 1 score'],
         ],
-        label='Mix',
+        label='Will you know which mix (Mix 1 or Mix 2) each participant received in round 1?',
         widget=widgets.RadioSelect
     )
     CQ2_incorrect = models.IntegerField(initial=0)
     CQ2_incorrect2 = models.IntegerField(initial=0)
+
+    CQ3 = models.IntegerField(
+        choices=[
+            [1, 'Only easy pairs'],
+            [2, 'Only hard pairs'],
+            [3, 'Either Mix 1 or Mix 2'],
+        ],
+        label='In round 2, what type of pairs will all participants face?',
+        widget=widgets.RadioSelect
+    )
+    CQ3_incorrect = models.IntegerField(initial=0)
+    CQ3_incorrect2 = models.IntegerField(initial=0)
+
     cq_page_2 = models.IntegerField(initial=0)
 
     Comprehension_password = models.StringField(blank=False,
@@ -157,7 +173,7 @@ class Player(BasePlayer):
 'R2: Tournament stage'
 
 
-class Selections_instructions(MyBasePage):
+class Selection_instructions(MyBasePage):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.page_pass_time = time.time() + C.Min_round_length
@@ -171,47 +187,50 @@ class Selections_instructions(MyBasePage):
 
 
 class Comprehension_Qs(MyBasePage):
-    extra_fields = ['CQ1', 'CQ2', 'CQ3', 'CQ4']
+    extra_fields = ['CQ1', 'CQ2', 'CQ3']
     form_fields = MyBasePage.form_fields + extra_fields
-
+    
     @staticmethod
     def before_next_page(player: Player, timeout_happened=False):
         MyBasePage.before_next_page(player, timeout_happened)
-
-        if player.CQ1 != 2:
+        
+        if player.CQ1 != 3:
             player.CQ1_incorrect = 1
             player.CQ1 = 0
-        if player.participant.treatment < 8:
-            if player.CQ2 != 1:
-                player.CQ2_incorrect = 1
-                player.CQ2 = 0
-        else:
-            if player.CQ2 != 3:
-                player.CQ2_incorrect = 1
-                player.CQ2 = 0
-        etc
-
-        incorrect_index = (player.CQ1_incorrect + player.CQ2_incorrect +
-                           player.CQ3_incorrect + player.CQ4_incorrect)
+            
+        if player.CQ2 != 2:
+            player.CQ2_incorrect = 1
+            player.CQ2 = 0
+            
+        if player.CQ3 != 2:
+            player.CQ3_incorrect = 1
+            player.CQ3 = 0
+        
+        incorrect_index = (player.CQ1_incorrect + player.CQ2_incorrect + 
+                          player.CQ3_incorrect)
         if incorrect_index > 0:
             player.cq_page_2 = 1
 
 class Comprehension_Qs2(MyBasePage):
-    extra_fields = ['CQ1', 'CQ2', 'CQ3', 'CQ4']
+    extra_fields = ['CQ1', 'CQ2', 'CQ3']
     form_fields = MyBasePage.form_fields + extra_fields
-
+    
     @staticmethod
     def is_displayed(player: Player):
         return player.cq_page_2 == 1
-
+    
     @staticmethod
     def before_next_page(player: Player, timeout_happened=False):
         MyBasePage.before_next_page(player, timeout_happened)
-
-        if player.CQ1 != player.Round2_Mix:
+        
+        if player.CQ1 != 3:
             player.CQ1_incorrect2 = 1
-        if player.CQ2 != 3:
+            
+        if player.CQ2 != 2:
             player.CQ2_incorrect2 = 1
+            
+        if player.CQ3 != 2:
+            player.CQ3_incorrect2 = 1
 
 class Selection1(MyBasePage):
     extra_fields = ['Selection1']
@@ -261,7 +280,7 @@ class Selection5(MyBasePage):
 
 
 page_sequence = [
-    Selections_instructions,
+    Selection_instructions,
     Comprehension_Qs,
     Comprehension_Qs2,
     Selection1,

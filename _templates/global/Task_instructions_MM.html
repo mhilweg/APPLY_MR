@@ -22,9 +22,12 @@
           <div class="section-header">
             <h4>🕹️ How to play</h4>
           <ol>
-              <li> Click on a square to reveal the information hidden on that card. </li>
+              <li>Click on a card to flip it over and see what's on it.</li>
+              <li>When you click on two cards that match, they remain uncovered and disappear.</li>
+              <li>If they do not match, they will flip back over and be hidden again.</li>
+              <!--<li> Click on a square to reveal the information hidden on that card. </li>
               <li> When you click on two cards that match, they remain uncovered and disappear. </li>
-              <li> If they do not match, they will be hidden again.</li>
+              <li> If they do not match, they will be hidden again.</li>-->
           </ol>
           </div>
 
@@ -34,12 +37,39 @@
           <div class="section-header">
             <h4>🎯 What is a match</h4>
             <p>The rule for matching pairs depends on the <strong>difficulty level</strong> of the cards.</p>
-            <ol>
-              <li><strong>Easy level:</strong> Each card shows an addition problem (e.g. 2+3).
+            <ol style="list-style: none; padding: 0;">
+              <!--<li><strong>Easy level:</strong> Each card shows an addition problem (e.g. 2+3).
               Two cards form a matching pair fit their solutions are the same (e.g. 2+3 and 4+1 both equal 5).</li>
               <li><strong>Hard level:</strong> Each card shows an addition problem and a Roman numeral (I or II).
-                  Two cards form a matching pair if both the sum and Roman numerals are the same (e.g. 2+3 II and 1+4 II).</li>
-            </ol>
+                  Two cards form a matching pair if both the sum and Roman numerals are the same (e.g. 2+3 II and 1+4 II).</li>-->
+                
+                <li style="margin-bottom: 20px;">
+                  <table style="width:100%; border-collapse: collapse;">
+                    <tr>
+                      <td style="width:80%; padding-right: 15px; vertical-align: middle;">
+                        <strong>Easy level:</strong> Each card shows an addition problem (e.g. 2+3).
+                        Two cards form a matching pair if their solutions are the same (e.g. 2+3 and 4+1 both equal 5).
+                      </td>
+                      <td style="width:20%; text-align: center; vertical-align: middle;">
+                        <img src="{{ static 'mathmemory_v2/Round1/easy/deck1/5_v_2_math_none_easy.png' }}" style="max-width:100%;" alt="Example of easy level card" />
+                      </td>
+                    </tr>
+                  </table>
+                </li>
+                <li>
+                  <table style="width:100%; border-collapse: collapse;">
+                    <tr>
+                      <td style="width:80%; padding-right: 15px; vertical-align: middle;">
+                        <strong>Hard level:</strong> Each card shows an addition problem and a Roman numeral (I or II).
+                        Two cards form a matching pair if both the sum and Roman numerals are the same (e.g. 2+3 II and 1+4 II).
+                      </td>
+                      <td style="width:20%; text-align: center; vertical-align: middle;">
+                        <img src="{{ static 'mathmemory_v2/Round1/hard/deck1/5_v_2_math_II_hard.png' }}" style="max-width:100%;" alt="Example of hard level card" />
+                      </td>
+                    </tr>
+                  </table>
+                </li>
+              </ol>
           </div>
 
         </div>
@@ -47,19 +77,26 @@
 
 
         <div class="section-box box-calm">
-          <div class="section-header">    
-
-            <h4 class="text-center mt-4"> 🔍Examples</h4> <!--make the content variable by treatment-->
-              <div class="task-example text-center mb-4">
-                <img src="{{ static 'graphics/MM_Match_Illustration.png' }}" style="max-width:100%;" alt="Example of non-match and match" />
-              </div>
-
-               
-              Above are two examples.
-              The first row of the image shows the procedure of uncovering a non-matching pair.
-              The second row of the image image shows the procedure of uncovering a matching pair.
-          
-              </div>
+            <div class="section-header">    
+              <h4 class="text-center mt-4"> 🔍Examples</h4> <!--make the content variable by treatment-->
+                <div class="task-example text-center mb-4">
+                  <table style="width:100%; border-collapse: collapse;">
+                    <tr>
+                      <td style="width:50%; padding: 10px; vertical-align: top;">
+                        <img src="{{ static 'graphics/math_no_match.png' }}" style="max-width:100%;" alt="Example of non-match" />
+                      </td>
+                      <td style="width:50%; padding: 10px; vertical-align: top;">
+                        <img src="{{ static 'graphics/math_match.png' }}" style="max-width:100%;" alt="Example of match" />
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                
+                Above are two examples.
+                The left image shows the procedure of uncovering a non-matching pair.
+                The right image shows the procedure of uncovering a matching pair.
+            
+            </div>
           </div>
 
     <div class="section-box box-neutral">
@@ -76,10 +113,9 @@
 
           <h4> 🏆 Timing & Scoring:</h4>
           <ul>
-            <li> Each round lasts <strong>two minutes</strong>. </li>
+            <li> Each round lasts <strong>two minutes</strong> (120 seconds). </li>
             <li> You earn <strong>1 point</strong> per correct match.</li>
-            <li>The number of points you earn will not affect your bonus in this study.
-                However, it would affect the bonus for the participants who competed on the task. </li>
+            <li>The number of points you earn will affect your bonus.</li>
           </ul>
           <p class="text-center">Keep in mind that this task is influenced by your <strong>maths skills</strong>.</p><!--make this variable-->
 

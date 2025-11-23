@@ -278,9 +278,12 @@ class Aboutyou(Page):
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened=False):
-        treatment_assignment(player)  # assign treatment and update quotas
-        player.participant.Treatment = int(get_treatment_part(0, player))
-        player.treatment = int(get_treatment_part(0, player))
+        if player.gender in ['Other', 'Rather not say']:
+            player.Allowed = 0
+        else:
+            treatment_assignment(player)  # assign treatment and update quotas
+            player.participant.Treatment = int(get_treatment_part(0, player))
+            player.treatment = int(get_treatment_part(0, player))
         
 class Instructions(MyBasePage):
 
@@ -337,6 +340,12 @@ class Round_1_play_easy(MyBasePage):
         player.participant.vars['R1_easy'] = player.Piece_rate
         player.participant.vars['R1_easy_attempts'] = player.Piece_rate_Attempts
 
+class Round_1_Transition(MyBasePage):
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.Allowed == 1
+
 
 class Round_1_play_hard(MyBasePage):
     extra_fields = ['Piece_rate','Piece_rate_Attempts'] 
@@ -375,41 +384,17 @@ class Round_1_play_hard(MyBasePage):
     def before_next_page(player: Player, timeout_happened=False):
         MyBasePage.before_next_page(player, timeout_happened)
         # Optional: also store the total to a convenient participant field
-        player.participant.R1_score = player.Piece_rate
-
-
-class Round_1_play(MyBasePage):
-    extra_fields = ['Piece_rate','Piece_rate_Attempts'] 
-    form_fields = MyBasePage.form_fields + extra_fields
+        r1_easy = player.participant.vars.get('R1_easy', 0)
     
-    timeout_seconds = C.Round_length
-    timer_text = C.Timer_text
+        # Store hard-only score
+        player.participant.vars['R1_hard'] = player.Piece_rate - r1_easy
+        
+        # Store total score
+        player.participant.R1_score = player.Piece_rate  # Already contains easy + hard
 
-    @staticmethod
-    def is_displayed(player: Player):
-        return player.Allowed == 1
-
-    @staticmethod
-    def vars_for_template(player: Player):
-        variables = MyBasePage.vars_for_template(player)
-
-        # Add or modify variables specific to ExtendedPage
-        for _ in ['Piece_rate', 'Piece_rate_Attempts']:
-            variables['hidden_fields'].append(_)
-        return variables
-    @staticmethod
-    def js_vars(player: Player):
-        return {'field_name': 'Piece_rate',
-                'treatment_num': player.participant.Treatment,  # int, e.g. 1..10
-                'round_index': 1,
-                'mix': None,
-                }
-
-    @staticmethod
-    def before_next_page(player: Player, timeout_happened=False):
-        MyBasePage.before_next_page(player, timeout_happened)
-        player.participant.R1_score = player.Piece_rate
-
+class Practice_Score(MyBasePage):
+    
+    pass
 
 class Disallowed1(Page):
 
@@ -428,30 +413,33 @@ class Redirect(Page):
     @staticmethod
     def is_displayed(player):
         return player.Allowed == 0
-
+    
     @staticmethod
     def js_vars(player):
+        # Use .get() with a fallback to avoid KeyError
+        completionlink = player.subsession.session.config.get(
+            'completionlinkdisallowed', 
+            'https://en.wikipedia.org/wiki/Censorship_of_Wikipedia'  # Your fallback URL
+        )
         return dict(
-            completionlinkscreenout=
-            player.subsession.session.config['completionlinkdisallowed']
+            completionlinkscreenout=completionlink
         )
 
 
-class Practice_Score(Page):
-    pass
 # TBU !
 
 
 page_sequence = [Welcome,
                  AI_catch,
                  Aboutyou,
+                 Redirect,
                  Instructions,
                  Round_1_instructions,
                  Round_1_begin,
                 Round_1_play_easy,
+                Round_1_Transition,
                 Round_1_play_hard,
                  Practice_Score,
                  Disallowed1,
                  Disallowed2,
-                 Redirect
                  ]

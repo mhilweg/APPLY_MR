@@ -13,8 +13,8 @@ SESSION_CONFIGS = [
 
          completionlinkfull=
          'https://app.prolific.com/submissions/complete?cc=CFXZMHHD',
-         completionlindisallowed=
-         'https://app.prolific.com/submissions/complete?cc=CO97ZFCL',
+         completionlinkdisallowed=
+         'https://en.wikipedia.org/wiki/Censorship_of_Wikipedia',
 
          ),
     
