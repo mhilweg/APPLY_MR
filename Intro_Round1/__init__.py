@@ -174,6 +174,16 @@ class Player(BasePlayer):
         blank=True,
     )
 
+    # Store card orders for Round 1
+    R1_easy_card_order = models.LongStringField(blank=True)
+    R1_hard_card_order = models.LongStringField(blank=True)
+    
+    # Store breakdown scores
+    R1_easy_score = models.IntegerField(initial=0)
+    R1_hard_score = models.IntegerField(initial=0)
+    R1_easy_attempts = models.IntegerField(initial=0)
+    R1_hard_attempts = models.IntegerField(initial=0)
+
     # data quality
     blur_log = models.LongStringField(blank=True)
     blur_count = models.IntegerField(initial=0, blank=True)
@@ -303,7 +313,7 @@ class Round_1_begin(Page):
         return player.Allowed == 1
     
 class Round_1_play_easy(MyBasePage):
-    extra_fields = ['Piece_rate','Piece_rate_Attempts'] 
+    extra_fields = ['Piece_rate','Piece_rate_Attempts', 'R1_easy_card_order'] 
     form_fields = MyBasePage.form_fields + extra_fields
     
     timeout_seconds = C.Round_length/2  # set to 60 later
@@ -316,7 +326,7 @@ class Round_1_play_easy(MyBasePage):
     @staticmethod
     def vars_for_template(player: Player):
         variables = MyBasePage.vars_for_template(player)
-        for _ in ['Piece_rate', 'Piece_rate_Attempts']:
+        for _ in ['Piece_rate', 'Piece_rate_Attempts', 'R1_easy_card_order']:
             variables['hidden_fields'].append(_)
         return variables
 
@@ -348,7 +358,7 @@ class Round_1_Transition(MyBasePage):
 
 
 class Round_1_play_hard(MyBasePage):
-    extra_fields = ['Piece_rate','Piece_rate_Attempts'] 
+    extra_fields = ['Piece_rate','Piece_rate_Attempts', 'R1_hard_card_order'] 
     form_fields = MyBasePage.form_fields + extra_fields
     
     timeout_seconds = C.Round_length/2  # set to 60 later
@@ -361,7 +371,7 @@ class Round_1_play_hard(MyBasePage):
     @staticmethod
     def vars_for_template(player: Player):
         variables = MyBasePage.vars_for_template(player)
-        for _ in ['Piece_rate', 'Piece_rate_Attempts']:
+        for _ in ['Piece_rate', 'Piece_rate_Attempts', 'R1_hard_card_order']:
             variables['hidden_fields'].append(_)
         return variables
 
@@ -383,14 +393,21 @@ class Round_1_play_hard(MyBasePage):
     @staticmethod
     def before_next_page(player: Player, timeout_happened=False):
         MyBasePage.before_next_page(player, timeout_happened)
-        # Optional: also store the total to a convenient participant field
         r1_easy = player.participant.vars.get('R1_easy', 0)
-    
-        # Store hard-only score
-        player.participant.vars['R1_hard'] = player.Piece_rate - r1_easy
+        r1_easy_att = player.participant.vars.get('R1_easy_attempts', 0)
+        
+        # Store breakdown scores in Player model for database
+        player.R1_easy_score = r1_easy
+        player.R1_hard_score = player.Piece_rate - r1_easy
+        player.R1_easy_attempts = r1_easy_att
+        player.R1_hard_attempts = player.Piece_rate_Attempts - r1_easy_att
+        
+        # Store in participant vars (for display)
+        player.participant.vars['R1_hard'] = player.R1_hard_score
+        player.participant.vars['R1_hard_attempts'] = player.R1_hard_attempts
         
         # Store total score
-        player.participant.R1_score = player.Piece_rate  # Already contains easy + hard
+        player.participant.R1_score = player.Piece_rate
 
 class Practice_Score(MyBasePage):
     

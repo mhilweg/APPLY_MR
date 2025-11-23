@@ -714,6 +714,44 @@ function ShuffleImages(){
   for (let i=srcs.length-1;i>0;i--){ const j=rndInt(i+1); [srcs[i],srcs[j]]=[srcs[j],srcs[i]]; }
   node = $(Source + " div:first-child");
   for (let k=0;k<srcs.length;k++){ $("#"+node.attr("id")+" img").attr("src",srcs[k]); node=node.next(); }
+  storeCardOrder(srcs);
+}
+
+function storeCardOrder(srcs) {
+  const filenames = srcs.map(src => src.split('/').pop());
+  
+  const orderString = filenames.join(',');
+  
+  let fieldName = '';
+  if (roundIndex === 1) {
+    if (phase === 'easy') {
+      fieldName = 'R1_easy_card_order';
+    } else if (phase === 'hard') {
+      fieldName = 'R1_hard_card_order';
+    }
+  } else if (roundIndex === 2) {
+    fieldName = 'R2_card_order';
+  } else if (roundIndex === 3) {
+    fieldName = 'R3_card_order';
+  }
+
+  if (fieldName) {
+    let orderInput = document.getElementById('id_' + fieldName);
+    if (!orderInput) {
+      orderInput = document.createElement('input');
+      orderInput.type = 'hidden';
+      orderInput.id = 'id_' + fieldName;
+      orderInput.name = fieldName;
+      document.body.appendChild(orderInput);
+    }
+    
+    const currentValue = orderInput.value;
+    if (currentValue) {
+      orderInput.value = currentValue + '|' + orderString;  
+    } else {
+      orderInput.value = orderString;
+    }
+  }
 }
 
 function drawDeck(imgList){
