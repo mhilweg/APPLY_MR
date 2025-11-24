@@ -798,7 +798,7 @@ function OpenCard(){
           BoxOpened=""; ImgOpened="";
         }, 400); //original 220
       }
-      setTimeout(()=>$(Source + " div").bind("click", OpenCard), 230);
+      setTimeout(()=>$(Source + " div").bind("click", OpenCard), 410); //original 230
     }
 
     Counter++; $("#counter").html(""+Counter);
