@@ -5,14 +5,15 @@ SESSION_CONFIGS = [
 
          app_sequence=[
              'Intro_Round1',
-             'Selections',
-             'Exit_Survey'
+             'Selections'
          ],
 
          num_demo_participants=1,
 
-         completionlinkfull=
-         'https://app.prolific.com/submissions/complete?cc=CFXZMHHD',
+         completionlinkcorrect=
+         'https://en.wikipedia.org/wiki/Censorship_of_Wikipedia',
+            completionlinkincorrect=
+         'https://en.wikipedia.org/wiki/Censorship_of_Wikipedia',
          completionlinkdisallowed=
          'https://en.wikipedia.org/wiki/Censorship_of_Wikipedia',
 
