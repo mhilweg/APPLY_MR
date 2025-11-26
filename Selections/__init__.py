@@ -62,10 +62,15 @@ class Player(BasePlayer):
     )
 
     incentivised_selection = models.IntegerField()
+    SelectionLine1 = models.IntegerField()
     Selection1 = models.IntegerField()
+    SelectionLine2 = models.IntegerField()
     Selection2 = models.IntegerField()
+    SelectionLine3 = models.IntegerField()
     Selection3 = models.IntegerField()
+    SelectionLine4 = models.IntegerField()
     Selection4 = models.IntegerField()
+    SelectionLine5 = models.IntegerField()
     Selection5 = models.IntegerField()
     bonus = models.IntegerField()
 
@@ -232,6 +237,28 @@ class Comprehension_Qs2(MyBasePage):
         if player.CQ3 != 2:
             player.CQ3_incorrect2 = 1
 
+class SelectionsBegin(MyBasePage):
+
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        treatment_num = player.Treatment
+        session_players = player.session.get_players()
+
+        same_treatment_passed_count = sum(
+            1 for p in session_players
+            if p.treatment == treatment_num and p._index_in_pages > player._index_in_pages
+        )
+
+        player_id = (same_treatment_passed_count % 90) + 1
+        player.assigned_id = player_id
+
+        base = (player_id - 1) * 5
+        player.Selectionline1 = base + 0
+        player.Selectionline2 = base + 1
+        player.Selectionline3 = base + 2
+        player.Selectionline4 = base + 3
+        player.Selectionline5 = base + 4
+
 class Selection1(MyBasePage):
     extra_fields = ['Selection1']
     form_fields = MyBasePage.form_fields + extra_fields
@@ -283,6 +310,7 @@ page_sequence = [
     Selection_instructions,
     Comprehension_Qs,
     Comprehension_Qs2,
+    SelectionsBegin,
     Selection1,
     Selection2,
     Selection3,

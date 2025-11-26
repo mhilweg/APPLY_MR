@@ -173,6 +173,7 @@ class Player(BasePlayer):
         label='Please enter your browser name and version (e.g. Chrome 100.0.4896.127)',
         blank=True,
     )
+    mouse_data = models.LongStringField(blank=True)
 
     # Store card orders for Round 1
     R1_easy_card_order = models.LongStringField(blank=True)
@@ -194,41 +195,48 @@ class Player(BasePlayer):
 def treatment_assignment(player):
     session = player.subsession.session
 
-    # Initialize quota dictionaries if they don't exist
+    # Initialize quota dictionaries (if missing)
     if not hasattr(session, 'Male_quotas'):
-        session.Male_quotas = {str(i): 0 for i in range(1, 6)}
+        session.Male_quotas = {str(i): 0 for i in range(1, 6)}  # Treatments 1-5 for males
     if not hasattr(session, 'Female_quotas'):
-        session.Female_quotas = {str(i): 0 for i in range(1, 6)}
+        session.Female_quotas = {str(i): 0 for i in range(1, 5)}  # Treatments 1-4 for females
 
     if player.gender == 'Male':
         Quotas = session.Male_quotas
+        max_per_treatment = 90
+        allowed_treatments = [t for t, count in Quotas.items() if count < max_per_treatment]
+        if not allowed_treatments:
+            # Fall back if all full (should not happen if recruiting correctly)
+            treatment = random.choice(list(Quotas.keys()))
+        else:
+            treatment = random.choice(allowed_treatments)
     elif player.gender == 'Female':
         Quotas = session.Female_quotas
+        max_per_treatment = 90
+        allowed_treatments = [t for t, count in Quotas.items() if count < max_per_treatment]
+        if not allowed_treatments:
+            treatment = random.choice(list(Quotas.keys()))
+        else:
+            treatment = random.choice(allowed_treatments)
     else:
-        # Default or error handling if gender not recognized
-        Quotas = session.Male_quotas  # or handle otherwise
+        # Handle 'Other' or 'Rather not say' if relevant (e.g. block or treat as male)
+        treatment = None
+        player.Allowed = 0
+        return
 
-    # Treatments allowed with count less than 900
-    allowed_treatments = [t for t, count in Quotas.items() if count < 900]
-
-    if not allowed_treatments:
-        # If all treatments full, assign randomly or handle differently
-        treatment = random.choice(list(Quotas.keys()))
-    else:
-        # Randomly pick one treatment with quota available
-        treatment = random.choice(allowed_treatments)
-
+    # Assign treatment and increment quota
     player.participant.Treatmentstring = treatment
     player.participant.Gender = player.gender
 
-    # Update quota count
     Quotas[treatment] += 1
 
-    # Save back the updated quotas
+    # Save updated quotas
     if player.gender == 'Male':
         session.Male_quotas = Quotas
     else:
         session.Female_quotas = Quotas
+
+    # Save numeric treatment field on player for convenience
 
 
 # PAGES
@@ -243,7 +251,7 @@ class Welcome(Page):
 
 class AI_catch(Page):   
     form_model = 'player'
-    form_fields = ['ai_catch_answer', 'honeypot']
+    form_fields = ['ai_catch_answer', 'honeypot', 'mouse_data']
 
     @staticmethod
     def is_displayed(player: Player):
