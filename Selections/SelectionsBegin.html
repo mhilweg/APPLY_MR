@@ -7,7 +7,13 @@
 <script type="text/javascript" src="{{ static 'js/Script_modal.js' }}"></script>
 <script type="text/javascript" src="{{ static 'js/data_quality.js' }}"></script>
 
-{{include Selection_instructions}}
+<div class="content-box box-info">
+
+  <!-- Header -->
+  <div class="section-header text-center">
+    <h3>Click on 'Start' to begin making your selections.</h3>
+    <hr class="section-divider">
+  </div>
 
 
   <!-- Form Fields -->
@@ -29,32 +35,13 @@
 
   <!-- Instruction & Next Buttons -->
   <div class="buttons-container">
-    <div class="instructions-box">
-      <p class="instructions-title">Instruction Buttons</p>
-      <div class="Instructions">
-        <a onclick="open_modal(1)" class="otree-btn-next btn btn-primary">Study Instructions</a>
-        <a onclick="open_modal(2)" class="otree-btn-next btn btn-primary">Task Instructions</a>
-      </div>
-    </div>
-    <button id="NextButton" class="otree-btn-next btn btn-primary">Next</button>
+    <button id="NextButton" class="otree-btn-next btn btn-primary">Start</button>
   </div>
 
 </div>
 </div>
 
 <!-- Modals -->
-<div id="myModal1" class="modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2>Study Instructions</h2>
-      <span class="close" onclick="span_click(1)">&times;</span>
-    </div>
-    <div class="modal-body">
-      {{ include Instructions_path }}
-    </div>
-  </div>
-</div>
-
 <div id="myModal2" class="modal">
   <div class="modal-content">
     <div class="modal-header">
@@ -67,4 +54,15 @@
   </div>
 </div>
 
+<div id="myModal1" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Study Instructions</h2>
+      <span class="close" onclick="span_click(1)">&times;</span>
+    </div>
+    <div class="modal-body">
+      {{ include Instructions_path }}
+    </div>
+  </div>
+</div>
 {{ endblock }}

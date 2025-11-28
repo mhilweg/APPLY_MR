@@ -96,54 +96,7 @@ class Player(BasePlayer):
     job = models.StringField(label='What is your employment status?',
                                 choices=['Unemployed', 'Part-time', 'Full-time', 'Student', 'Retired', 'Other'], widget=widgets.RadioSelect)
 
-
-    'Comprehension and attention checks'
-    #whether the player got the comprehension questions right at the first try
-    CQ1 = models.IntegerField(
-        choices = [
-            [1, 'Pair A'],
-            [2, 'Pair B'],
-            [3, 'Pair C']],
-        label='Easy match pairs',
-        widget=widgets.RadioSelect
-    )
-    CQ1_incorrect = models.IntegerField(initial=0)
-
-    CQ2 = models.IntegerField(
-        choices=[
-            [1, 'Pair A'],
-            [2, 'Pair B'],
-            [3, 'Pair C']],
-        label='Hard match pairs',
-        widget=widgets.RadioSelect
-    )
-    CQ2_incorrect = models.IntegerField(initial=0)
-
-    CQ3 = models.IntegerField(
-        choices = [
-            [1, '60'],
-            [2, '90'],
-            [3, '120'],
-            [4, '150']
-        ],
-        label='Duration of rounds',
-        widget=widgets.RadioSelect
-    )
-    CQ3_incorrect = models.IntegerField(initial=0)
-
-    CQ4 = models.IntegerField(
-        choices=[
-            [1, ''],
-            [2, ''],
-            [3, ''],
-            [4, '']
-        ],
-        label='Skill',
-        widget=widgets.RadioSelect
-    )
-    CQ4_incorrect = models.IntegerField(initial=0)
-    cq_page_2 = models.IntegerField(initial=0)
-    CQ_fail = models.IntegerField(initial=0)
+    Bot = models.IntegerField(initial=0)
 
 
 
@@ -173,6 +126,7 @@ class Player(BasePlayer):
         label='Please enter your browser name and version (e.g. Chrome 100.0.4896.127)',
         blank=True,
     )
+    mouse_data = models.LongStringField(blank=True)
 
     # Store card orders for Round 1
     R1_easy_card_order = models.LongStringField(blank=True)
@@ -194,41 +148,48 @@ class Player(BasePlayer):
 def treatment_assignment(player):
     session = player.subsession.session
 
-    # Initialize quota dictionaries if they don't exist
+    # Initialize quota dictionaries (if missing)
     if not hasattr(session, 'Male_quotas'):
-        session.Male_quotas = {str(i): 0 for i in range(1, 6)}
+        session.Male_quotas = {str(i): 0 for i in range(1, 6)}  # Treatments 1-5 for males
     if not hasattr(session, 'Female_quotas'):
-        session.Female_quotas = {str(i): 0 for i in range(1, 6)}
+        session.Female_quotas = {str(i): 0 for i in range(1, 5)}  # Treatments 1-4 for females
 
     if player.gender == 'Male':
         Quotas = session.Male_quotas
+        max_per_treatment = 90
+        allowed_treatments = [t for t, count in Quotas.items() if count < max_per_treatment]
+        if not allowed_treatments:
+            # Fall back if all full (should not happen if recruiting correctly)
+            treatment = random.choice(list(Quotas.keys()))
+        else:
+            treatment = random.choice(allowed_treatments)
     elif player.gender == 'Female':
         Quotas = session.Female_quotas
+        max_per_treatment = 90
+        allowed_treatments = [t for t, count in Quotas.items() if count < max_per_treatment]
+        if not allowed_treatments:
+            treatment = random.choice(list(Quotas.keys()))
+        else:
+            treatment = random.choice(allowed_treatments)
     else:
-        # Default or error handling if gender not recognized
-        Quotas = session.Male_quotas  # or handle otherwise
+        # Handle 'Other' or 'Rather not say' if relevant (e.g. block or treat as male)
+        treatment = None
+        player.Allowed = 0
+        return
 
-    # Treatments allowed with count less than 900
-    allowed_treatments = [t for t, count in Quotas.items() if count < 900]
-
-    if not allowed_treatments:
-        # If all treatments full, assign randomly or handle differently
-        treatment = random.choice(list(Quotas.keys()))
-    else:
-        # Randomly pick one treatment with quota available
-        treatment = random.choice(allowed_treatments)
-
+    # Assign treatment and increment quota
     player.participant.Treatmentstring = treatment
     player.participant.Gender = player.gender
 
-    # Update quota count
     Quotas[treatment] += 1
 
-    # Save back the updated quotas
+    # Save updated quotas
     if player.gender == 'Male':
         session.Male_quotas = Quotas
     else:
         session.Female_quotas = Quotas
+
+    # Save numeric treatment field on player for convenience
 
 
 # PAGES
@@ -243,7 +204,7 @@ class Welcome(Page):
 
 class AI_catch(Page):   
     form_model = 'player'
-    form_fields = ['ai_catch_answer', 'honeypot']
+    form_fields = ['ai_catch_answer', 'honeypot', 'mouse_data']
 
     @staticmethod
     def is_displayed(player: Player):
@@ -261,6 +222,7 @@ class AI_catch(Page):
 
         if player.honeypot != "":
             player.Allowed = 0
+            player.Bot = 1
 
 class Aboutyou(Page):
     form_model = 'player'
@@ -413,33 +375,42 @@ class Practice_Score(MyBasePage):
     
     pass
 
-class Disallowed1(Page):
+class ScreenOut(Page):
 
     @staticmethod
     def is_displayed(player):
-        return player.Allowed == 0 and player.CQ_fail == 0
+        return player.Allowed == 0 and player.Bot == 0
 
-class Disallowed2(Page):
-
-    @staticmethod
-    def is_displayed(player):
-        return player.Allowed == 0 and player.CQ_fail == 1
-
-class Redirect(Page):
+class RejectBot(Page):
 
     @staticmethod
     def is_displayed(player):
-        return player.Allowed == 0
-    
+        return player.Allowed == 0 and player.Bot == 1
+
+class RedirectScreenOut(Page):
+
+    @staticmethod
+    def is_displayed(player):
+        return player.Allowed == 0 and player.Bot == 0
+
     @staticmethod
     def js_vars(player):
-        # Use .get() with a fallback to avoid KeyError
-        completionlink = player.subsession.session.config.get(
-            'completionlinkdisallowed', 
-            'https://en.wikipedia.org/wiki/Censorship_of_Wikipedia'  # Your fallback URL
-        )
         return dict(
-            completionlinkscreenout=completionlink
+            completionlinkscreenout=
+            player.subsession.session.config['completionlinkscreenout']
+        )
+
+class RedirectBot(Page):
+
+    @staticmethod
+    def is_displayed(player):
+        return player.Allowed == 0 and player.Bot == 0
+
+    @staticmethod
+    def js_vars(player):
+        return dict(
+            completionlinkbot=
+            player.subsession.session.config['completionlinkbot']
         )
 
 
@@ -449,14 +420,15 @@ class Redirect(Page):
 page_sequence = [Welcome,
                  AI_catch,
                  Aboutyou,
-                 Redirect,
                  Instructions,
                  Round_1_instructions,
                  Round_1_begin,
                 Round_1_play_easy,
                 Round_1_Transition,
                 Round_1_play_hard,
-                 Practice_Score
-                 # Disallowed1,
-                 # Disallowed2,
+                 Practice_Score,
+                 ScreenOut,
+                 RejectBot,
+                    RedirectScreenOut,
+                 RedirectBot
                  ]

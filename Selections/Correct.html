@@ -1,0 +1,86 @@
+{{ block title }}
+{{ endblock }}
+
+{{ block content }}
+<link rel="stylesheet" href="{{static 'css/css.css'}}">
+<link rel="stylesheet" href="{{static 'css/modal.css'}}">
+<script type="text/javascript" src="{{ static 'js/Script_modal.js' }}"></script>
+<script type="text/javascript" src="{{ static 'js/data_quality.js' }}"></script>
+
+<div class="content-box box-info">
+
+  <!-- Header -->
+   <div class="section-header text-center">
+    <h3>Results</h3>
+    <hr class="section-divider">
+     <div class="section-box-nonhover box-white">
+    <div class="section-header">
+      <p>
+       The selection randomly chosen for your payment was selection {{ player.incentivised_selection }}.
+      </p>
+      <p>
+        The worker that you selected in selection {{ player.incentivised_selection }} achieved the highest score of group {{ player.incentivised_selection }} in round 2.
+        Therefore, you will receive a bonus of £1. This will be paid to you within one week.
+      </p>
+       <p>
+        Thank you for your participation in this study.
+      </p>
+      <p>
+        You can click on 'next' to be returned to Prolific.
+      </p>
+
+    </div>
+  </div>
+  </div>
+
+
+  <!-- Form Fields -->
+  <form>
+    {% for field in form %}
+      {% if field.name not in hidden_fields %}
+        {{ formfield field.name }}
+      {% endif %}
+    {% endfor %}
+    <div style="display:none">
+      {% for field in form %}
+        {% if field.name in hidden_fields %}
+          {{ formfield field.name }}
+        {% endif %}
+      {% endfor %}
+    </div>
+
+  </form>
+
+  <!-- Instruction & Next Buttons -->
+  <div class="buttons-container">
+    <button id="NextButton" class="otree-btn-next btn btn-primary">Start</button>
+  </div>
+
+</div>
+</div>
+
+<!-- Modals -->
+<div id="myModal2" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Task Instructions</h2>
+      <span class="close" onclick="span_click(2)">&times;</span>
+    </div>
+    <div class="modal-body">
+      {{ include Task_instructions }}
+    </div>
+  </div>
+</div>
+
+<div id="myModal1" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Study Instructions</h2>
+      <span class="close" onclick="span_click(1)">&times;</span>
+    </div>
+    <div class="modal-body">
+      {{ include Instructions_path }}
+    </div>
+  </div>
+</div>
+{{ endblock }}
