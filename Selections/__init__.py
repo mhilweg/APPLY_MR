@@ -286,7 +286,7 @@ class Selection1(MyBasePage):
 
         # Your CSV and data processing logic
         treatments_map = {
-            1: 'simulated_data_treatment1.csv',
+            1: 'pilotdata.csv',
             2: 'simulated_data_treatment2.csv',
             4: 'simulated_data_treatment4.csv',
             9: 'simulated_data_treatment9.csv',
@@ -331,7 +331,7 @@ class Selection1(MyBasePage):
         player.moved_to_selection = 1
 
         if player.treatment == 1:
-            csv = 'simulated_data_treatment1.csv'
+            csv = 'pilotdata.csv'
         elif player.treatment == 2:
             csv = 'simulated_data_treatment2.csv'
         elif player.treatment == 4:
@@ -384,7 +384,7 @@ class Selection2(MyBasePage):
 
         # Your CSV and data processing logic
         treatments_map = {
-            1: 'simulated_data_treatment1.csv',
+            1: 'pilotdata.csv',
             2: 'simulated_data_treatment2.csv',
             4: 'simulated_data_treatment4.csv',
             9: 'simulated_data_treatment9.csv',
@@ -428,7 +428,7 @@ class Selection2(MyBasePage):
     def before_next_page(player: Player, timeout_happened=False):
 
         if player.treatment == 1:
-            csv = 'simulated_data_treatment1.csv'
+            csv = 'pilotdata.csv'
         elif player.treatment == 2:
             csv = 'simulated_data_treatment2.csv'
         elif player.treatment == 4:
@@ -479,7 +479,7 @@ class Selection3(MyBasePage):
 
         # Your CSV and data processing logic
         treatments_map = {
-            1: 'simulated_data_treatment1.csv',
+            1: 'pilotdata.csv',
             2: 'simulated_data_treatment2.csv',
             4: 'simulated_data_treatment4.csv',
             9: 'simulated_data_treatment9.csv',
@@ -523,7 +523,7 @@ class Selection3(MyBasePage):
     def before_next_page(player: Player, timeout_happened=False):
 
         if player.treatment == 1:
-            csv = 'simulated_data_treatment1.csv'
+            csv = 'pilotdata.csv'
         elif player.treatment == 2:
             csv = 'simulated_data_treatment2.csv'
         elif player.treatment == 4:
@@ -574,7 +574,7 @@ class Selection4(MyBasePage):
 
         # Your CSV and data processing logic
         treatments_map = {
-            1: 'simulated_data_treatment1.csv',
+            1: 'pilotdata.csv',
             2: 'simulated_data_treatment2.csv',
             4: 'simulated_data_treatment4.csv',
             9: 'simulated_data_treatment9.csv',
@@ -618,7 +618,7 @@ class Selection4(MyBasePage):
     def before_next_page(player: Player, timeout_happened=False):
 
         if player.treatment == 1:
-            csv = 'simulated_data_treatment1.csv'
+            csv = 'pilotdata.csv'
         elif player.treatment == 2:
             csv = 'simulated_data_treatment2.csv'
         elif player.treatment == 4:
@@ -669,7 +669,7 @@ class Selection5(MyBasePage):
 
         # Your CSV and data processing logic
         treatments_map = {
-            1: 'simulated_data_treatment1.csv',
+            1: 'pilotdata.csv',
             2: 'simulated_data_treatment2.csv',
             4: 'simulated_data_treatment4.csv',
             9: 'simulated_data_treatment9.csv',
@@ -713,7 +713,7 @@ class Selection5(MyBasePage):
     def before_next_page(player: Player, timeout_happened=False):
 
         if player.treatment == 1:
-            csv = 'simulated_data_treatment1.csv'
+            csv = 'pilotdata.csv'
         elif player.treatment == 2:
             csv = 'simulated_data_treatment2.csv'
         elif player.treatment == 4:
