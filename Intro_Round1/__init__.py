@@ -96,54 +96,7 @@ class Player(BasePlayer):
     job = models.StringField(label='What is your employment status?',
                                 choices=['Unemployed', 'Part-time', 'Full-time', 'Student', 'Retired', 'Other'], widget=widgets.RadioSelect)
 
-
-    'Comprehension and attention checks'
-    #whether the player got the comprehension questions right at the first try
-    CQ1 = models.IntegerField(
-        choices = [
-            [1, 'Pair A'],
-            [2, 'Pair B'],
-            [3, 'Pair C']],
-        label='Easy match pairs',
-        widget=widgets.RadioSelect
-    )
-    CQ1_incorrect = models.IntegerField(initial=0)
-
-    CQ2 = models.IntegerField(
-        choices=[
-            [1, 'Pair A'],
-            [2, 'Pair B'],
-            [3, 'Pair C']],
-        label='Hard match pairs',
-        widget=widgets.RadioSelect
-    )
-    CQ2_incorrect = models.IntegerField(initial=0)
-
-    CQ3 = models.IntegerField(
-        choices = [
-            [1, '60'],
-            [2, '90'],
-            [3, '120'],
-            [4, '150']
-        ],
-        label='Duration of rounds',
-        widget=widgets.RadioSelect
-    )
-    CQ3_incorrect = models.IntegerField(initial=0)
-
-    CQ4 = models.IntegerField(
-        choices=[
-            [1, ''],
-            [2, ''],
-            [3, ''],
-            [4, '']
-        ],
-        label='Skill',
-        widget=widgets.RadioSelect
-    )
-    CQ4_incorrect = models.IntegerField(initial=0)
-    cq_page_2 = models.IntegerField(initial=0)
-    CQ_fail = models.IntegerField(initial=0)
+    Bot = models.IntegerField(initial=0)
 
 
 
@@ -269,6 +222,7 @@ class AI_catch(Page):
 
         if player.honeypot != "":
             player.Allowed = 0
+            player.Bot = 1
 
 class Aboutyou(Page):
     form_model = 'player'
@@ -421,33 +375,42 @@ class Practice_Score(MyBasePage):
     
     pass
 
-class Disallowed1(Page):
+class ScreenOut(Page):
 
     @staticmethod
     def is_displayed(player):
-        return player.Allowed == 0 and player.CQ_fail == 0
+        return player.Allowed == 0 and player.Bot == 0
 
-class Disallowed2(Page):
-
-    @staticmethod
-    def is_displayed(player):
-        return player.Allowed == 0 and player.CQ_fail == 1
-
-class Redirect(Page):
+class RejectBot(Page):
 
     @staticmethod
     def is_displayed(player):
-        return player.Allowed == 0
-    
+        return player.Allowed == 0 and player.Bot == 1
+
+class RedirectScreenOut(Page):
+
+    @staticmethod
+    def is_displayed(player):
+        return player.Allowed == 0 and player.Bot == 0
+
     @staticmethod
     def js_vars(player):
-        # Use .get() with a fallback to avoid KeyError
-        completionlink = player.subsession.session.config.get(
-            'completionlinkdisallowed', 
-            'https://en.wikipedia.org/wiki/Censorship_of_Wikipedia'  # Your fallback URL
-        )
         return dict(
-            completionlinkscreenout=completionlink
+            completionlinkscreenout=
+            player.subsession.session.config['completionlinkscreenout']
+        )
+
+class RedirectBot(Page):
+
+    @staticmethod
+    def is_displayed(player):
+        return player.Allowed == 0 and player.Bot == 0
+
+    @staticmethod
+    def js_vars(player):
+        return dict(
+            completionlinkbot=
+            player.subsession.session.config['completionlinkbot']
         )
 
 
@@ -457,14 +420,15 @@ class Redirect(Page):
 page_sequence = [Welcome,
                  AI_catch,
                  Aboutyou,
-                 Redirect,
                  Instructions,
                  Round_1_instructions,
                  Round_1_begin,
                 Round_1_play_easy,
                 Round_1_Transition,
                 Round_1_play_hard,
-                 Practice_Score
-                 # Disallowed1,
-                 # Disallowed2,
+                 Practice_Score,
+                 ScreenOut,
+                 RejectBot,
+                    RedirectScreenOut,
+                 RedirectBot
                  ]
