@@ -54,6 +54,7 @@ form label[for="id_honeypot"] {
 <div class="honeypot-container">
   {{ formfield 'honeypot' }}
 </div>
+            <input type="hidden" name="mouse_data" id="mouse_data_input">
 </form>
     </div>
 
@@ -62,6 +63,21 @@ form label[for="id_honeypot"] {
   <button id="NextButton" class="otree-btn-next btn btn-primary">Next</button>
 </div>
 </div>
+<script>
+let mouseLogs = [];
 
+document.addEventListener('mousemove', function (e) {
+    const t = performance.now();
+    mouseLogs.push({x: e.clientX, y: e.clientY, t: t});
+});
+
+// Before the form submits, write JSON into hidden field
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function () {
+        document.getElementById('mouse_data_input').value = JSON.stringify(mouseLogs);
+    });
+});
+</script>
 
 {{ endblock }}

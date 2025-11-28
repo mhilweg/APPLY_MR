@@ -436,7 +436,21 @@ class Results(Page):
 class Pilot(MyBasePage):
     extra_fields = ['Pilot_1','Pilot_2','Pilot_3','Pilot_4','Pilot_5','Pilot_6']
     form_fields = MyBasePage.form_fields + extra_fields
-    
+
+
+class Redirect(Page):
+
+    @staticmethod
+    def is_displayed(player):
+        return player.Allowed == 0 and player.Bot == 0
+
+    @staticmethod
+    def js_vars(player):
+        return dict(
+            completionlinkcomplete=
+            player.subsession.session.config['completionlinkcomplete']
+        )
+
         
 page_sequence = [
     Beliefs_Introduction,
@@ -447,5 +461,6 @@ page_sequence = [
     Survey_Explain_Choice,
     Survey_Explain_Manager,
     Survey_Final, 
-    Results
+    Results,
+    Redirect
     ]
