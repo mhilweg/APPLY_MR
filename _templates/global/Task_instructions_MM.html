@@ -16,6 +16,9 @@
               <p>On your screen, you will see <strong>16 blue squares</strong>. Each square represents a hidden
               card which can be revealed by clicking on it. Your task is to find as many matching pairs of cards
             as possible within the time limit.</p>
+                <center>
+                <p>The task will rely on your <strong>mathematics</strong> skills.</p>
+                </center>
             </div>
 
         </div>
@@ -26,8 +29,8 @@
           <ol>
               <li>Click on a card to flip it over and see what's on it.</li>
               <li>Click on another card to flip it over.</li>
-              <li>If the two cards match, they will disappear.</li>
-              <li>If they do not match, they will flip back over and be hidden again.</li>
+              <li><strong>If the two cards match</strong>, they will disappear.</li>
+              <li><strong>If they do not match</strong>, they will flip back over and be hidden again.</li>
               <li>Repeat the above to find as many matching pairs in the time.</li>
               <!--<li> Click on a square to reveal the information hidden on that card. </li>
               <li> When you click on two cards that match, they remain uncovered and disappear. </li>
@@ -37,92 +40,80 @@
 
         </div>
 
-        <div class="section-box box-info"><!--make the content variable by treatment-->
+    <div class="section-box box-info"><!--make the content variable by treatment-->
           <div class="section-header">
             <h4>🎯 What is a match</h4>
             <p>The rule for matching pairs depends on the <strong>difficulty level</strong> of the cards.</p>
-            <ol style="list-style: none; padding: 0;">
-              <!--<li><strong>Easy level:</strong> Each card shows an addition problem (e.g. 2+3).
-              Two cards form a matching pair fit their solutions are the same (e.g. 2+3 and 4+1 both equal 5).</li>
-              <li><strong>Hard level:</strong> Each card shows an addition problem and a Roman numeral (I or II).
-                  Two cards form a matching pair if both the sum and Roman numerals are the same (e.g. 2+3 II and 1+4 II).</li>-->
-                
-                <li style="margin-bottom: 20px;">
-                  <table style="width:100%; border-collapse: collapse;">
-                    <tr>
-                      <td style="width:80%; padding-right: 15px; vertical-align: middle;">
-                        <strong>Easy level:</strong> Each card shows an addition problem (e.g. 2+3).
-                        Two cards form a matching pair if their solutions are the same (e.g. 2+3 and 4+1 both equal 5).
-                      </td>
-                      <td style="width:20%; text-align: center; vertical-align: middle;">
-                        <img src="{{ static 'mathmemory_v2/Round1/easy/deck1/5_v_2_math_none_easy.png' }}" style="max-width:100%;" alt="Example of easy level card" />
-                      </td>
-                    </tr>
-                  </table>
-                </li>
-                <li>
-                  <table style="width:100%; border-collapse: collapse;">
-                    <tr>
-                      <td style="width:80%; padding-right: 15px; vertical-align: middle;">
-                        <strong>Hard level:</strong> Each card shows an addition problem and a Roman numeral (I or II).
-                        Two cards form a matching pair if both the sum and Roman numerals are the same (e.g. 2+3 II and 1+4 II).
-                      </td>
-                      <td style="width:20%; text-align: center; vertical-align: middle;">
-                        <img src="{{ static 'mathmemory_v2/Round1/hard/deck1/5_v_2_math_II_hard.png' }}" style="max-width:100%;" alt="Example of hard level card" />
-                      </td>
-                    </tr>
-                  </table>
-                </li>
-              </ol>
+              <hr class="section-divider">
+                  <strong>Easy level</strong><br>
+                  Each <em>easy</em> card shows an addition problem.<br>
+                  Two cards match if their solutions are the same.
+                  <br><br>
+                      <center>
+                          <div style="width: 70%; margin: 0 auto;">
+                          <div class="section-box box-white">
+      <table style="width:65%; border-collapse: collapse; margin: 0 auto;">
+        <tr>
+          <td style="width:50%; padding-right: 15px; vertical-align: middle;">
+            <img src="{{ static 'mathmemory_v2/Round1/easy/deck2/8_v_1_math_none_easy.png' }}" style="width:250px; height:150px; object-fit:cover; border: 1px solid black;"" alt="Example of easy level card" />
+          </td>
+          <td style="width:50%; text-align: center; vertical-align: middle;">
+            <img src="{{ static 'mathmemory_v2/Round1/easy/deck2/8_v_2_math_none_easy.png' }}" style="width:250px; height:150px; object-fit:cover; border: 1px solid black;"" alt="Example of easy level card" />
+          </td>
+        </tr>
+      </table>
+      <br>
+      <center>
+      These easy cards <strong>match</strong>.</center>
+  </div>
+  </div>
+    </center>
+
+<hr class="section-divider">
+                  <strong>Hard level</strong><br>
+                  Each <em>hard</em> card also shows a roman numeral (I or II).<br>
+                  Matching cards must also have the same numerals.
+                  <br><br>
+                      <center>
+                          <div style="width: 70%; margin: 0 auto;">
+                          <div class="section-box box-white">
+      <table style="width:65%; border-collapse: collapse; margin: 0 auto;">
+        <tr>
+          <td style="width:50%; padding-right: 15px; vertical-align: middle;">
+            <img src="{{ static 'mathmemory_v2/Round3/deck4/7_v_2_math_II_hard.png' }}" style="width:250px; height:150px; object-fit:cover; border: 1px solid black;"" alt="Example of hard level card" />
+          </td>
+          <td style="width:50%; text-align: center; vertical-align: middle;">
+            <img src="{{ static 'mathmemory_v2/Round3/deck4/7_v_3_math_II_hard.png' }}" style="width:250px; height:150px; object-fit:cover; border: 1px solid black;"" alt="Example of hard level card" />
+          </td>
+        </tr>
+      </table>
+      <br>
+      <center>
+      These hard cards <strong>match</strong>.</center>
+  </div>
+  </div>
+    </center>
+
+
           </div>
 
         </div>
 
-
-
-        <div class="section-box box-calm">
-            <div class="section-header">    
-              <h4 class="text-center mt-4"> 🔍Examples</h4> <!--make the content variable by treatment-->
-                <div class="task-example text-center mb-4">
-                  <table style="width:100%; border-collapse: collapse;">
-                    <tr>
-                      <td style="width:50%; padding: 10px; vertical-align: top;">
-                        <img src="{{ static 'graphics/math_no_match.png' }}" style="max-width:100%;" alt="Example of non-match" />
-                      </td>
-                      <td style="width:50%; padding: 10px; vertical-align: top;">
-                        <img src="{{ static 'graphics/math_match.png' }}" style="max-width:100%;" alt="Example of match" />
-                      </td>
-                    </tr>
-                  <tr>
-                    <td style="width:50%; padding: 10px; vertical-align: top;">
-                      <img src="{{ static 'graphics/math_no_match_hard.png' }}" style="max-width:100%;" alt="Example of non-match" />
-                    </td>
-                    <td style="width:50%; padding: 10px; vertical-align: top;">
-                      <img src="{{ static 'graphics/math_match_hard.png' }}" style="max-width:100%;" alt="Example of match" />
-                    </td>
-                  </tr>
-                </table>
-              </div>
-
-              Above are four examples.
-              The left images shows the procedure of uncovering a non-matching pair.
-              The right images shows the procedure of uncovering a matching pair.
-
-            
-            </div>
-          </div>
 
     <div class="section-box box-neutral">
           <div class="section-header">
-            You will see <b>one set of cards</b> at a time.
-              Each set contains 8 pairs (16 cards).
-              After you find all 8 pairs, <b>a new set appears</b>.
-              You can play up to 7 sets per round (the maximum score is 56).
-              </div>
+              <h4>❗ Important</h4>
+              <ul>
+            <li>You will see one set of cards at a time.</li>
+              <li>Each set contains 8 pairs (16 cards).</li>
+              <li>After you find all 8 pairs, a new set appears.</li>
+              <li>You can play up to 7 sets per round (the maximum score is 56).</li>
+              </ul>
+          </div>
         </div>
 
           <div class="section-box box-info">
-          <div class="section-header">    
+          <div class="section-header">
 
           <h4> 🏆 Timing & Scoring:</h4>
           <ul>
@@ -130,14 +121,13 @@
             <li> You earn <strong>1 point</strong> per correct match.</li>
             <li>The number of points you earn will affect your bonus.</li>
           </ul>
-          <p class="text-center">Keep in mind that performance in this task is influenced by your <strong>maths skills</strong>.</p><!--make this variable-->
 
           </div>
           </div>
-          
+
 
 
 
     </div>
-  </div> 
-</div>     
+  </div>
+</div>
