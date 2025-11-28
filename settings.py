@@ -1,5 +1,7 @@
 from os import environ
 
+DEBUG = False
+
 SESSION_CONFIGS = [
     dict(name='test',
 
