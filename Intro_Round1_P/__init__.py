@@ -1,6 +1,6 @@
 from otree.api import *
 import random
-from django.utils.safestring import mark_safe
+#from django.utils.safestring import mark_safe
 from common import *
 
 
@@ -82,15 +82,7 @@ class Player(BasePlayer):
                                                 label='Password')
     
 
-    Promise = models.BooleanField(
-        choices=[
-            (True,  mark_safe('I promise')),
-            (False, mark_safe('I cannot promise')),
-        ],
-        label=mark_safe('Do you <b>promise</b> to complete this study in one sitting and without clicking out of the browser window?'),
-        widget=widgets.RadioSelect,
-    )
-    
+        
     browser = models.StringField(
         label='Please enter your browser name and version (e.g. Chrome 100.0.4896.127)',
         blank=True,
