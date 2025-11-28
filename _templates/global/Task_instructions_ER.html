@@ -10,12 +10,15 @@
 <em>On this page, you will see the instructions showed to each worker.
     You will get to practise this task but <b>your</b> performance in the task does not affect your payoff.
 Understanding the task is important for making your selection decision and thus maximising your payoff.</em><br><br>
-        <div class="section-box box-neutral">
+         <div class="section-box box-neutral">
             <div class="section-header">
               <h4>🧱 Basics</h4>
               <p>On your screen, you will see <strong>16 blue squares</strong>. Each square represents a hidden
               card which can be revealed by clicking on it. Your task is to find as many matching pairs of cards
             as possible within the time limit.</p>
+                <center
+                <p>The task will rely on your <strong>emotion recognition</strong> skills.</p>
+                </center>
             </div>
 
         </div>
@@ -26,8 +29,8 @@ Understanding the task is important for making your selection decision and thus 
           <ol>
               <li>Click on a card to flip it over and see what's on it.</li>
               <li>Click on another card to flip it over.</li>
-              <li>If the two cards match, they will disappear.</li>
-              <li>If they do not match, they will flip back over and be hidden again.</li>
+              <li><b>If the two cards match</b>, they will disappear.</li>
+              <li><b>If they do not match</b>, they will flip back over and be hidden again.</li>
               <li>Repeat the above to find as many matching pairs in the time.</li>
               <!--<li> Click on a square to reveal the information hidden on that card. </li>
               <li> When you click on two cards that match, they remain uncovered and disappear. </li>
@@ -41,110 +44,95 @@ Understanding the task is important for making your selection decision and thus 
           <div class="section-header">
             <h4>🎯 What is a match</h4>
             <p>The rule for matching pairs depends on the <strong>difficulty level</strong> of the cards.</p>
-            <ul style="list-style: none; padding: 0;">
-                <li style="margin-bottom: 20px;">
-                  <table style="width:100%; border-collapse: collapse;">
-                    <tr>
-                      <td style="width:80%; padding-right: 15px; vertical-align: middle;">
-                        <strong>Easy level:</strong> Each card shows either an image of a person
-                        displaying an emotion (e.g. anger or pride) or an emotion
-                        word (e.g. "Anger" or "Pride"). Two cards form a matching
-                        pair if the emotion conveyed in the image matches the emotion word.
-                      </td>
-                      <td style="width:20%; text-align: center; vertical-align: middle;">
-                        <img src="{{ static 'emotionrecognition/Round1/easy/deck1/Anger_1_word_none_easy.png' }}" style="max-width:100%;" alt="Example of easy level card" />
-                      </td>
-                    </tr>
-                  </table>
-                </li>
-                <li>
-                  <table style="width:100%; border-collapse: collapse;">
-                    <tr>
-                      <td style="width:80%; padding-right: 15px; vertical-align: middle;">
-                        <strong>Hard level:</strong> Each card additionally displays an emoji (😊 or ☹️).
-                        Two cards form a matching pair if the emotion conveyed in the image matches the emotion word
-                        and the emojis are the same.
-                      </td>
-                      <td style="width:20%; text-align: center; vertical-align: middle;">
-                        <img src="{{ static 'emotionrecognition/Round1/hard/deck3/Pride_14_emotion_happy_hard.png' }}" style="max-width:100%;" alt="Example of hard level card" />
-                      </td>
-                    </tr>
-                  </table>
-                </li>
-              </ul>
-            <!--<ol>
-              <li><strong>Easy level:</strong> Each card shows either an image of a person
-                displaying an emotion (e.g. anger or pride) or an emotion
-                word (e.g. "Anger" or "Pride"). Two cards form a matching
-                  pair if the emotion conveyed in the image matches the emotion word.</li>
-              <li><strong>Hard level:</strong> Each card additionally displays an emoji (😊 or ☹️).
-                  Two cards form a matching pair if the emotion conveyed in the image matches the emotion word
-                    and the emojis are the same.
-              </li>
-            </ol>-->
+
+              <hr class="section-divider">
+                  <strong>Easy level</strong><br>
+                  Each <em>easy</em> card shows either an image of a person displaying an emotion or an emotion word.<br>
+                  Two cards match if the emotion conveyed is the same as the emotion word.
+                  <br><br>
+                      <center>
+                          <div style="width: 55%; margin: 0 auto;">
+                          <div class="section-box box-white">
+      <table style="width:50%; border-collapse: collapse; margin: 0 auto;">
+        <tr>
+          <td style="width:50%; padding-right: 15px; vertical-align: middle;">
+            <img src="{{ static 'emotionrecognition/Round1/easy/deck1/Anger_4_emotion_none_easy.png' }}" style="width:150px; height:150px; object-fit:cover; border: 1px solid black;"" alt="Example of easy level card" />
+          </td>
+          <td style="width:50%; text-align: center; vertical-align: middle;">
+            <img src="{{ static 'emotionrecognition/Round1/easy/deck1/Anger_1_word_none_easy.png' }}" style="width:150px; height:150px; object-fit:cover; border: 1px solid black;"" alt="Example of easy level card" />
+          </td>
+        </tr>
+      </table>
+      <br>
+      <center>
+      These easy cards <strong>match</strong>.</center>
+  </div>
+  </div>
+    </center>
+
+
+              <hr class="section-divider">
+                  <strong>Hard level</strong><br>
+                  Each <em>hard</em> card also shows an emoji (😊 or ☹️).<br>
+                  Matching cards must also have the same emojis.
+                  <br><br>
+                      <center>
+                          <div style="width: 55%; margin: 0 auto;">
+                          <div class="section-box box-white">
+      <table style="width:50%; border-collapse: collapse; margin: 0 auto;">
+        <tr>
+          <td style="width:50%; padding-right: 15px; vertical-align: middle;">
+            <img src="{{ static 'emotionrecognition/Round3/deck6/Fear_3_emotion_sad_hard.png' }}" style="width:150px; height:150px; object-fit:cover; border: 1px solid black;"" alt="Example of hard level card" />
+          </td>
+          <td style="width:50%; text-align: center; vertical-align: middle;">
+            <img src="{{ static 'emotionrecognition/Round3/deck6/Fear_1_word_sad_hard.png' }}" style="width:150px; height:150px; object-fit:cover; border: 1px solid black;"" alt="Example of hard level card" />
+          </td>
+        </tr>
+      </table>
+      <br>
+      <center>
+      These hard cards <strong>match</strong>.</center>
+  </div>
+  </div>
+    </center>
+
+
           </div>
 
         </div>
-        <div class="section-box box-calm">
-          <div class="section-header">    
-            <h4 class="text-center mt-4"> 🔍Examples</h4> <!--make the content variable by treatment-->
-              <div class="task-example text-center mb-4">
-                <table style="width:100%; border-collapse: collapse;">
-                  <tr>
-                    <td style="width:50%; padding: 10px; vertical-align: top;">
-                      <img src="{{ static 'graphics/emotion_no_match.png' }}" style="max-width:100%;" alt="Example of non-match" />
-                    </td>
-                    <td style="width:50%; padding: 10px; vertical-align: top;">
-                      <img src="{{ static 'graphics/emotion_match.png' }}" style="max-width:100%;" alt="Example of match" />
-                    </td>
-                  </tr>
-               <tr>
-                    <td style="width:50%; padding: 10px; vertical-align: top;">
-                      <img src="{{ static 'graphics/emotion_no_match_hard.png' }}" style="max-width:100%;" alt="Example of non-match" />
-                    </td>
-                    <td style="width:50%; padding: 10px; vertical-align: top;">
-                      <img src="{{ static 'graphics/emotion_match_hard.png' }}" style="max-width:100%;" alt="Example of match" />
-                    </td>
-                  </tr>
-                </table>
-              </div>
 
-              Above are four examples.
-              The left images shows the procedure of uncovering a non-matching pair.
-              The right images shows the procedure of uncovering a matching pair.
-
-          
-          </div>
-        </div>
 
 
         <!--<div class="section-box box-calm">
-          <div class="section-header">    
+          <div class="section-header">
 
-            <h4 class="text-center mt-4"> 🔍Examples</h4> 
+            <h4 class="text-center mt-4"> 🔍Examples</h4>
               <div class="task-example text-center mb-4">
                 <img src="{{ static 'graphics/ERM_Match_Illustration.png' }}" style="max-width:100%;" alt="Example of non-match and match" />
               </div>
 
-               
+
               Above are two examples.
               The first row of the image shows the procedure of uncovering a non-matching pair.
               The second row of the image shows the procedure of uncovering a matching pair.
-          
+
               </div>
           </div> -->
 
     <div class="section-box box-neutral">
           <div class="section-header">
-            You will see <b>one set of cards</b> at a time.
-              Each set contains 8 pairs (16 cards).
-              After you find all 8 pairs, <b>a new set appears</b>.
-              You can play up to 7 sets per round (the maximum score is 56).
-              </div>
+              <h4>❗ Important</h4>
+              <ul>
+            <li>You will see one set of cards at a time.</li>
+              <li>Each set contains 8 pairs (16 cards).</li>
+              <li>After you find all 8 pairs, a new set appears.</li>
+              <li>You can play up to 7 sets per round (the maximum score is 56).</li>
+              </ul>
+          </div>
         </div>
 
           <div class="section-box box-info">
-          <div class="section-header">    
+          <div class="section-header">
 
           <h4> 🏆 Timing & Scoring:</h4>
           <ul>
@@ -152,7 +140,7 @@ Understanding the task is important for making your selection decision and thus 
             <li> You earn <strong>1 point</strong> per correct match.</li>
             <li>The number of points you earn will affect your bonus.</li>
           </ul>
-          <p class="text-center">Keep in mind that performance in this task is influenced by your <strong>emotion recognition skills</strong>.</p><!--make this variable-->
+
 
           </div>
           </div>

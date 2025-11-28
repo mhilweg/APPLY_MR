@@ -10,14 +10,16 @@ SESSION_CONFIGS = [
 
          num_demo_participants=1,
 
-         completionlinkscreenout=
+         completionlinkscreenout =
          'https://en.wikipedia.org/wiki/Censorship_of_Wikipedia',
-            completionlinkbot=
+        completionlinkbot =
          'https://en.wikipedia.org/wiki/Censorship_of_Wikipedia',
-         completionlinkcomplete=
+         completionlinkcorrect =
+         'https://en.wikipedia.org/wiki/Censorship_of_Wikipedia',
+        completionlinkincorrect =
          'https://en.wikipedia.org/wiki/Censorship_of_Wikipedia',
 
-         ),
+         )
     
 
 ]
