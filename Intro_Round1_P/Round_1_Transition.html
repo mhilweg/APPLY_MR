@@ -1,0 +1,72 @@
+{{ block title }}
+{{ endblock }}
+
+{{ block content }}
+<link rel="stylesheet" href="{{ static 'css/css.css' }}">
+<link rel="stylesheet" href="{{ static 'css/modal.css' }}">
+<script type="text/javascript" src="{{ static 'js/Script_modal.js' }}"></script>
+<script type="text/javascript" src="{{ static 'js/data_quality.js' }}"></script>
+
+<br><br><br>
+
+<div class="content-box box-info">
+    <div class="section-header text-center">
+        <h3>⏩ Transition</h3>
+        <hr class="section-divider">
+    </div>
+
+  <div class="section-box-nonhover box-info">
+  <p>
+    You have  just completed <strong>1 minute</strong> of the <strong>easy</strong> version of the
+    <strong>{{ task }} task</strong>. Next, you will play another <strong>1 minute</strong> of the <strong>hard</strong> version
+    of it.
+  </p>
+
+      <center><em>Click “Next” to continue once you feel ready to.</em></center>
+  </div>
+
+
+<!-- Buttons + Next -->
+
+  <div class="buttons-container">
+        <div class="instructions-box">
+            <p class="instructions-title">Instruction Buttons</p> <!-- Title for the buttons -->
+            <div class="Instructions">
+                <a id="myBtn" onclick="open_modal(1)" class="otree-btn-next btn btn-primary">Study Instructions</a>
+                <a id="myBtn" onclick="open_modal(2)" class="otree-btn-next btn btn-primary">{{task}} game</a>
+            </div>
+        </div>         
+        <button id="NextButton" class="otree-btn-next btn btn-primary">Next</button>
+    </div>
+
+
+<!-- Modals -->
+<div id="myModal2" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Task Instructions</h2>
+      <span class="close" onclick="span_click(2)">&times;</span>
+    </div>
+    <p style="padding:0;">
+      {{ include Task_instructions }}
+    </p>
+  </div>
+</div>
+
+<div id="myModal1" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Study Instructions</h2>
+      <span class="close" onclick="span_click(1)">&times;</span>
+    </div>
+    <p style="padding:0;">
+      {{ include Instructions_path }}
+    </p>
+  </div>
+
+  
+</div>
+
+
+
+{{ endblock }}
