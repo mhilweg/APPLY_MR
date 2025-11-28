@@ -54,6 +54,7 @@ def creating_session(subsession):
         player.participant.Comprehension_passed = False
         player.participant.Attention_passed = True
         player.participant.Blur_warned = 0
+        player.participant.Treatment = 0
         
         # create and save Group_members to the participant variable
         

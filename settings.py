@@ -9,7 +9,7 @@ SESSION_CONFIGS = [
              'Selections'
          ],
 
-         num_demo_participants=1,
+         num_demo_participants=2,
 
          completionlinkscreenout =
          'https://en.wikipedia.org/wiki/Censorship_of_Wikipedia',

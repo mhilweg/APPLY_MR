@@ -208,24 +208,24 @@ class Selection_instructions(MyBasePage):
 class Comprehension_Qs(MyBasePage):
     extra_fields = ['CQ1', 'CQ2', 'CQ3']
     form_fields = MyBasePage.form_fields + extra_fields
-    
+
     @staticmethod
     def before_next_page(player: Player, timeout_happened=False):
         MyBasePage.before_next_page(player, timeout_happened)
-        
+
         if player.CQ1 != 3:
             player.CQ1_incorrect = 1
             player.CQ1 = 0
-            
+
         if player.CQ2 != 2:
             player.CQ2_incorrect = 1
             player.CQ2 = 0
-            
+
         if player.CQ3 != 2:
             player.CQ3_incorrect = 1
             player.CQ3 = 0
-        
-        incorrect_index = (player.CQ1_incorrect + player.CQ2_incorrect + 
+
+        incorrect_index = (player.CQ1_incorrect + player.CQ2_incorrect +
                           player.CQ3_incorrect)
         if incorrect_index > 0:
             player.cq_page_2 = 1
@@ -233,21 +233,21 @@ class Comprehension_Qs(MyBasePage):
 class Comprehension_Qs2(MyBasePage):
     extra_fields = ['CQ1', 'CQ2', 'CQ3']
     form_fields = MyBasePage.form_fields + extra_fields
-    
+
     @staticmethod
     def is_displayed(player: Player):
         return player.cq_page_2 == 1
-    
+
     @staticmethod
     def before_next_page(player: Player, timeout_happened=False):
         MyBasePage.before_next_page(player, timeout_happened)
-        
+
         if player.CQ1 != 3:
             player.CQ1_incorrect2 = 1
-            
+
         if player.CQ2 != 2:
             player.CQ2_incorrect2 = 1
-            
+
         if player.CQ3 != 2:
             player.CQ3_incorrect2 = 1
 
@@ -257,12 +257,12 @@ class SelectionsBegin(MyBasePage):
     def before_next_page(player, timeout_happened):
         player.treatment = player.participant.Treatment
 
-        treatment_num = player.treatment
+        treatment_num = player.participant.Treatment
         session_players = player.subsession.get_players()
 
         same_treatment_passed_count = sum(
-            1 for p in player.subsession.get_players()
-            if p.treatment == treatment_num and p.moved_to_selection == 1
+            1 for p in session_players
+            if p.participant.Treatment == treatment_num and p.moved_to_selection == 1
         )
 
         player_id = (same_treatment_passed_count % 90) + 1
@@ -274,6 +274,8 @@ class SelectionsBegin(MyBasePage):
         player.SelectionLine3 = base + 2
         player.SelectionLine4 = base + 3
         player.SelectionLine5 = base + 4
+
+        player.moved_to_selection = 1
 
 class Selection1(MyBasePage):
     extra_fields = ['Selection1']
@@ -328,7 +330,7 @@ class Selection1(MyBasePage):
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened=False):
-        player.moved_to_selection = 1
+
 
         if player.treatment == 1:
             csv = 'pilotdata.csv'
