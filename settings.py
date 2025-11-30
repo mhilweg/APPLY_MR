@@ -14,16 +14,16 @@ SESSION_CONFIGS = [
          num_demo_participants=2,
 
          completionlinkscreenout =
-         'https://en.wikipedia.org/wiki/Censorship_of_Wikipedia',
+         'https://app.prolific.com/submissions/complete?cc=CAKLREFT',
         completionlinkbot =
-         'https://en.wikipedia.org/wiki/Censorship_of_Wikipedia',
+         'https://app.prolific.com/submissions/complete?cc=CNMOJU0F',
          completionlinkcorrect =
-         'https://en.wikipedia.org/wiki/Censorship_of_Wikipedia',
+         'https://app.prolific.com/submissions/complete?cc=C1PQ7ONC',
         completionlinkincorrect =
-         'https://en.wikipedia.org/wiki/Censorship_of_Wikipedia',
+         'https://app.prolific.com/submissions/complete?cc=CKO0FKHK',
 
          )
-    
+
 
 ]
 
