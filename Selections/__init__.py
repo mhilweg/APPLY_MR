@@ -288,11 +288,11 @@ class Selection1(MyBasePage):
 
         # Your CSV and data processing logic
         treatments_map = {
-            1: 'pilotdata.csv',
-            2: 'simulated_data_treatment2.csv',
-            4: 'simulated_data_treatment4.csv',
-            9: 'simulated_data_treatment9.csv',
-            10: 'simulated_data_treatment10.csv',
+            1: 't1_data.csv',
+            2: 't2_data.csv',
+            4: 't4_data.csv',
+            9: 't9_data.csv',
+            10: 't10_data.csv',
         }
         csv = treatments_map.get(player.treatment)
         wide_df = pd.read_csv(csv)
@@ -333,15 +333,15 @@ class Selection1(MyBasePage):
 
 
         if player.treatment == 1:
-            csv = 'pilotdata.csv'
+            csv = 't1_data.csv'
         elif player.treatment == 2:
-            csv = 'simulated_data_treatment2.csv'
+            csv = 't2_data.csv'
         elif player.treatment == 4:
-            csv = 'simulated_data_treatment4.csv'
+            csv = 't4_data.csv'
         elif player.treatment == 9:
-            csv = 'simulated_data_treatment9.csv'
+            csv = 't9_data.csv'
         elif player.treatment == 10:
-            csv = 'simulated_data_treatment10.csv'
+            csv = 't10_data.csv'
 
         wide_df = pd.read_csv(csv)
         result_df = pd.DataFrame()
@@ -386,11 +386,11 @@ class Selection2(MyBasePage):
 
         # Your CSV and data processing logic
         treatments_map = {
-            1: 'pilotdata.csv',
-            2: 'simulated_data_treatment2.csv',
-            4: 'simulated_data_treatment4.csv',
-            9: 'simulated_data_treatment9.csv',
-            10: 'simulated_data_treatment10.csv',
+            1: 't1_data.csv',
+            2: 't2_data.csv',
+            4: 't4_data.csv',
+            9: 't9_data.csv',
+            10: 't10_data.csv',
         }
         csv = treatments_map.get(player.treatment)
         wide_df = pd.read_csv(csv)
@@ -430,15 +430,15 @@ class Selection2(MyBasePage):
     def before_next_page(player: Player, timeout_happened=False):
 
         if player.treatment == 1:
-            csv = 'pilotdata.csv'
+            csv = 't1_data.csv'
         elif player.treatment == 2:
-            csv = 'simulated_data_treatment2.csv'
+            csv = 't2_data.csv'
         elif player.treatment == 4:
-            csv = 'simulated_data_treatment4.csv'
+            csv = 't4_data.csv'
         elif player.treatment == 9:
-            csv = 'simulated_data_treatment9.csv'
+            csv = 't9_data.csv'
         elif player.treatment == 10:
-            csv = 'simulated_data_treatment10.csv'
+            csv = 't10_data.csv'
 
         wide_df = pd.read_csv(csv)
         result_df = pd.DataFrame()
@@ -481,11 +481,11 @@ class Selection3(MyBasePage):
 
         # Your CSV and data processing logic
         treatments_map = {
-            1: 'pilotdata.csv',
-            2: 'simulated_data_treatment2.csv',
-            4: 'simulated_data_treatment4.csv',
-            9: 'simulated_data_treatment9.csv',
-            10: 'simulated_data_treatment10.csv',
+            1: 't1_data.csv',
+            2: 't2_data.csv',
+            4: 't4_data.csv',
+            9: 't9_data.csv',
+            10: 't10_data.csv',
         }
         csv = treatments_map.get(player.treatment)
         wide_df = pd.read_csv(csv)
@@ -525,15 +525,15 @@ class Selection3(MyBasePage):
     def before_next_page(player: Player, timeout_happened=False):
 
         if player.treatment == 1:
-            csv = 'pilotdata.csv'
+            csv = 't1_data.csv'
         elif player.treatment == 2:
-            csv = 'simulated_data_treatment2.csv'
+            csv = 't2_data.csv'
         elif player.treatment == 4:
-            csv = 'simulated_data_treatment4.csv'
+            csv = 't4_data.csv'
         elif player.treatment == 9:
-            csv = 'simulated_data_treatment9.csv'
+            csv = 't9_data.csv'
         elif player.treatment == 10:
-            csv = 'simulated_data_treatment10.csv'
+            csv = 't10_data.csv'
 
         wide_df = pd.read_csv(csv)
         result_df = pd.DataFrame()
@@ -576,11 +576,11 @@ class Selection4(MyBasePage):
 
         # Your CSV and data processing logic
         treatments_map = {
-            1: 'pilotdata.csv',
-            2: 'simulated_data_treatment2.csv',
-            4: 'simulated_data_treatment4.csv',
-            9: 'simulated_data_treatment9.csv',
-            10: 'simulated_data_treatment10.csv',
+            1: 't1_data.csv',
+            2: 't2_data.csv',
+            4: 't4_data.csv',
+            9: 't9_data.csv',
+            10: 't10_data.csv',
         }
         csv = treatments_map.get(player.treatment)
         wide_df = pd.read_csv(csv)
@@ -620,15 +620,15 @@ class Selection4(MyBasePage):
     def before_next_page(player: Player, timeout_happened=False):
 
         if player.treatment == 1:
-            csv = 'pilotdata.csv'
+            csv = 't1_data.csv'
         elif player.treatment == 2:
-            csv = 'simulated_data_treatment2.csv'
+            csv = 't2_data.csv'
         elif player.treatment == 4:
-            csv = 'simulated_data_treatment4.csv'
+            csv = 't4_data.csv'
         elif player.treatment == 9:
-            csv = 'simulated_data_treatment9.csv'
+            csv = 't9_data.csv'
         elif player.treatment == 10:
-            csv = 'simulated_data_treatment10.csv'
+            csv = 't10_data.csv'
 
         wide_df = pd.read_csv(csv)
         result_df = pd.DataFrame()
@@ -671,11 +671,11 @@ class Selection5(MyBasePage):
 
         # Your CSV and data processing logic
         treatments_map = {
-            1: 'pilotdata.csv',
-            2: 'simulated_data_treatment2.csv',
-            4: 'simulated_data_treatment4.csv',
-            9: 'simulated_data_treatment9.csv',
-            10: 'simulated_data_treatment10.csv',
+            1: 't1_data.csv',
+            2: 't2_data.csv',
+            4: 't4_data.csv',
+            9: 't9_data.csv',
+            10: 't10_data.csv',
         }
         csv = treatments_map.get(player.treatment)
         wide_df = pd.read_csv(csv)
@@ -715,15 +715,15 @@ class Selection5(MyBasePage):
     def before_next_page(player: Player, timeout_happened=False):
 
         if player.treatment == 1:
-            csv = 'pilotdata.csv'
+            csv = 't1_data.csv'
         elif player.treatment == 2:
-            csv = 'simulated_data_treatment2.csv'
+            csv = 't2_data.csv'
         elif player.treatment == 4:
-            csv = 'simulated_data_treatment4.csv'
+            csv = 't4_data.csv'
         elif player.treatment == 9:
-            csv = 'simulated_data_treatment9.csv'
+            csv = 't9_data.csv'
         elif player.treatment == 10:
-            csv = 'simulated_data_treatment10.csv'
+            csv = 't10_data.csv'
 
         wide_df = pd.read_csv(csv)
         result_df = pd.DataFrame()

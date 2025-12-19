@@ -36,48 +36,36 @@ class C(CommonConstants):
     # Treatment quotas. This will be copied to the session variable.
     MathMemory_pic = 'https://raw.githubusercontent.com/argunaman2022/stereotypes-replication2/master/_static/pics/MathMemory_pic.png'
 
-    
-    # If instead you want a non-gender balanced treatment assignment with quotas remove one of these and use it for both genders.
-    Female_quotas = {
-    '1_M_N_N_N': 0,
-    '2_M_Y_N_N': 0,
-    '9_E_N_N_N': 0,
-    '10_E_Y_N_N': 0,
-    '4_M_Y_YM_M': 0,
+    TOTAL_QUOTAS = {  # For 1,2,9,10 (both genders)
+        '1_M_N_N_N': 90,
+        '2_M_Y_N_N': 90,
+        '9_E_N_N_N': 92,
+        '10_E_Y_N_N': 92,
     }
-    
-    Male_quotas = {
-    '1_M_N_N_N': 0,
-    '2_M_Y_N_N': 0,
-    '9_E_N_N_N': 0,
-    '10_E_Y_N_N': 0,
-    '4_M_Y_YM_M': 0,
+    QUOTA_4 = {  # T4 men only
+        '4_M_Y_YM_M': 86,
     }
+
+
 class Subsession(BaseSubsession):
     pass
 
 def creating_session(subsession):
-    '''
-    1. create the quotas for each treatment to be saved to the session variable
-        - make sure that in the settings.py file the SESSION_FIELDS has initialized the session variables
-    2. These quotas are initially zero but as participants are assigned they are incremented. 
-    - It is important to note that although prolific ensures gender balanced sample,
-        we need this balancing to be within treatment level also
-    '''
-    subsession.session.Male_quotas = C.Male_quotas.copy()
-    subsession.session.Female_quotas = C.Female_quotas.copy()
-        
-    subsession.session.T1_Quota_male = C.Male_quotas.copy()
-    subsession.session.T1_Quota_female = C.Female_quotas.copy()
-    
+    session = subsession.session
+
+    # Only initialize on round 1
+    if subsession.round_number == 1:
+        session.Total_quotas = {k: 0 for k in C.TOTAL_QUOTAS}
+        session.Quota_4 = {k: 0 for k in C.QUOTA_4}
+
     for player in subsession.get_players():
         player.Allowed = True
         player.participant.Promised = True
-        player.participant.Comprehension_passed = False 
+        player.participant.Comprehension_passed = False
         player.participant.Attention_passed = True
         player.participant.Blur_warned = 0
+        player.participant.payrule_version = 0
 
-        
         # create and save Group_members to the participant variable
         
             
@@ -139,52 +127,41 @@ class Player(BasePlayer):
 def treatment_assignment(player):
     session = player.subsession.session
 
-    # Initialize quota dictionaries (if missing)
-    if not hasattr(session, 'Male_quotas'):
-        session.Male_quotas = {str(i): 0 for i in range(1, 6)}  # Treatments 1-5 for males
-    if not hasattr(session, 'Female_quotas'):
-        session.Female_quotas = {str(i): 0 for i in range(1, 5)}  # Treatments 1-4 for females
+    # Initialize if missing
+    if not hasattr(session, 'Total_quotas'):
+        session.Total_quotas = {C.TOTAL_QUOTAS}  # Merge all
+    if not hasattr(session, 'Quota_4'):
+        session.Quota_4 = {k: 0 for k in C.QUOTA_4}
 
-    if player.gender == 'Male':
-        Quotas = session.Male_quotas
-        max_per_treatment = 90
-        allowed_treatments = [t for t, count in Quotas.items() if count < max_per_treatment]
-        if not allowed_treatments:
-            # Fall back if all full (should not happen if recruiting correctly)
-            treatment = random.choice(list(Quotas.keys()))
-        else:
-            treatment = random.choice(allowed_treatments)
-    elif player.gender == 'Female':
-        Quotas = session.Female_quotas
-        max_per_treatment = 90
-        allowed_treatments = [t for t, count in Quotas.items() if count < max_per_treatment]
-        if not allowed_treatments:
-            treatment = random.choice(list(Quotas.keys()))
-        else:
-            treatment = random.choice(allowed_treatments)
+    quotas = session.Total_quotas
+    max_quotas = C.TOTAL_QUOTAS
+    quota4 = session.Quota_4
+    max_quota4 = C.QUOTA_4
+
+    print(f"DEBUG: gender={player.gender}, quota4={quota4}")
+
+    # **MEN: T4 priority until full**
+    if player.gender == 'Male' and quota4['4_M_Y_YM_M'] < max_quota4['4_M_Y_YM_M']:
+        treatment = '4_M_Y_YM_M'
+        session.Quota_4['4_M_Y_YM_M'] += 1  # ✅ WRITE BACK
+        print("DEBUG: Male -> T4 (priority)")
+
+    # **EVERYONE ELSE: randomize 1,2,9,10 only**
     else:
-        # Handle 'Other' or 'Rather not say' if relevant (e.g. block or treat as male)
-        treatment = None
-        player.Allowed = 0
-        return
+        available = [t for t in C.TOTAL_QUOTAS if quotas[t] < max_quotas[t]]
+        if not available:
+            player.Allowed = 0
+            return
+        treatment = random.choice(available)
+        session.Total_quotas[treatment] += 1  # ✅ WRITE BACK
+        print(f"DEBUG: Randomized to {treatment}, available={available}")
 
-    # Assign treatment and increment quota
-    player.participant.Treatmentstring = treatment
-    player.participant.Gender = player.gender
+    # COMMIT
+    player.participant.vars['Treatmentstring'] = treatment
+    player.participant.vars['Gender'] = player.gender
+    session.Total_quotas = quotas  # Ensure write-back
 
-    Quotas[treatment] += 1
-
-    # Save updated quotas
-    if player.gender == 'Male':
-        session.Male_quotas = Quotas
-    else:
-        session.Female_quotas = Quotas
-
-    # Save numeric treatment field on player for convenience
-
-
-# PAGES
-#%% Base Pages
+    print(f"DEBUG: New quotas: T4={session.Quota_4}, others={session.Total_quotas}")
 
 
 #%% Pages
@@ -244,10 +221,13 @@ class Aboutyou(Page):
         if player.gender in ['Other', 'Rather not say']:
             player.Allowed = 0
         else:
-            treatment_assignment(player)  # assign treatment and update quotas
-            player.participant.Treatment = int(get_treatment_part(0, player))
-            player.treatment = int(get_treatment_part(0, player))
-        
+            treatment_assignment(player)  # Assign treatment and update quotas
+            # Ensure Treatmentstring is set before calling get_treatment_part
+            if player.Allowed == 1:
+                player.participant.Treatment = int(get_treatment_part(0, player))
+                player.treatment = int(get_treatment_part(0, player))
+
+
 class Instructions(MyBasePage):
 
     @staticmethod

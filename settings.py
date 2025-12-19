@@ -6,21 +6,21 @@ SESSION_CONFIGS = [
     dict(name='test',
 
          app_sequence=[
-             #'Intro_Round1',
-             'Intro_Round1_P',
+             'Intro_Round1',
+             #'Intro_Round1_P',
              'Selections'
          ],
 
          num_demo_participants=2,
 
-         completionlinkscreenout =
-         'https://app.prolific.com/submissions/complete?cc=CAKLREFT',
-        completionlinkbot =
-         'https://app.prolific.com/submissions/complete?cc=CNMOJU0F',
-         completionlinkcorrect =
-         'https://app.prolific.com/submissions/complete?cc=C1PQ7ONC',
-        completionlinkincorrect =
-         'https://app.prolific.com/submissions/complete?cc=CKO0FKHK',
+         completionlinkscreenout=
+         'https://app.prolific.com/submissions/complete?cc=C11YBC1V',
+        completionlinkbot=
+         'https://app.prolific.com/submissions/complete?cc=CBYOJ77R',
+         completionlinkcorrect=
+         'https://app.prolific.com/submissions/complete?cc=C1HUMCM8',
+        completionlinkincorrect=
+         'https://app.prolific.com/submissions/complete?cc=CVV31FSN',
 
          )
 
@@ -50,9 +50,9 @@ PARTICIPANT_FIELDS = [
     'round_for_payment', 'page_for_payment', 'R2_mix', 'incentivised_selection'
 
 ]
-SESSION_FIELDS = {
-                    'Female_quotas':{}, 'Male_quotas':{} 
-                 }
+SESSION_FIELDS = ['Total_quotas', 'Quota_4']
+
+
 
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans
