@@ -262,8 +262,7 @@ class SelectionsBegin(MyBasePage):
 
         same_treatment_passed_count = sum(
             1 for p in session_players
-            if hasattr(p.participant, 'Treatment') and 
-            p.participant.Treatment == treatment_num and 
+            if p.participant.vars.get('Treatment') == treatment_num and 
             p.moved_to_selection == 1
         )
 
