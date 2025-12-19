@@ -255,9 +255,9 @@ class SelectionsBegin(MyBasePage):
 
     @staticmethod
     def before_next_page(player, timeout_happened):
-        player.treatment = player.participant.Treatment
+        player.treatment = player.participant.treatment # changed this to lowercase "t" in treatment
 
-        treatment_num = player.participant.Treatment
+        treatment_num = player.participant.treatment # changed this to lowercase "t" in treatment
         session_players = player.subsession.get_players()
 
         same_treatment_passed_count = sum(
