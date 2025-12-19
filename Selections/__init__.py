@@ -255,14 +255,16 @@ class SelectionsBegin(MyBasePage):
 
     @staticmethod
     def before_next_page(player, timeout_happened):
-        player.treatment = player.participant.treatment # changed this to lowercase "t" in treatment
+        player.treatment = player.participant.Treatment 
 
-        treatment_num = player.participant.treatment # changed this to lowercase "t" in treatment
+        treatment_num = player.participant.Treatment 
         session_players = player.subsession.get_players()
 
         same_treatment_passed_count = sum(
             1 for p in session_players
-            if p.participant.Treatment == treatment_num and p.moved_to_selection == 1
+            if hasattr(p.participant, 'Treatment') and 
+            p.participant.Treatment == treatment_num and 
+            p.moved_to_selection == 1
         )
 
         player_id = (same_treatment_passed_count % 90) + 1
