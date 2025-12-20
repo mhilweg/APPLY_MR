@@ -2,6 +2,7 @@
 # IF YOU MODIFY THIS FILE, remove this comment.
 # otherwise, oTree will automatically overwrite it.
 otree>=5.10.3
+django>=3.2
 psycopg2>=2.8.4
 aiofiles==0.6.0
 click==7.1.2
