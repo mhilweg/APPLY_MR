@@ -36,12 +36,12 @@ class C(CommonConstants):
 
     TOTAL_QUOTAS = {  # For 1,2,9,10 (both genders)
         '1_M_N_N_N': 90,
-        '2_M_Y_N_N': 1,
-        '9_E_N_N_N': 4,
-        '10_E_Y_N_N': 2,
+        #'2_M_Y_N_N': 0,
+        #'9_E_N_N_N': 0,
+        '10_E_Y_N_N': 1,
     }
     QUOTA_4 = {  # T4 men only
-        '4_M_Y_YM_M': 4,
+        '4_M_Y_YM_M': 0,
     }
 
 
@@ -402,10 +402,10 @@ page_sequence = [Welcome,
                  Instructions,
                  Round_1_instructions,
                  Round_1_begin,
-                 Round_1_play_easy,
-                 Round_1_Transition,
-                 Round_1_play_hard,
-                 Practice_Score,
+                 #Round_1_play_easy,
+                 #Round_1_Transition,
+                 #Round_1_play_hard,
+                 #Practice_Score,
                  ScreenOut,
                  RejectBot,
                  RedirectScreenOut,
