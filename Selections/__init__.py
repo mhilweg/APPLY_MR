@@ -803,8 +803,8 @@ class RedirectIncorrect(Page):
 
 page_sequence = [
     Selection_instructions,
-   # Comprehension_Qs,
-   # Comprehension_Qs2,
+   Comprehension_Qs,
+   Comprehension_Qs2,
     SelectionsBegin,
     Selection1,
     Selection2,
