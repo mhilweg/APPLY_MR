@@ -35,7 +35,7 @@ class C(CommonConstants):
     MathMemory_pic = 'https://raw.githubusercontent.com/argunaman2022/stereotypes-replication2/master/_static/pics/MathMemory_pic.png'
 
     TOTAL_QUOTAS = {  # For 1,2,9,10 (both genders)
-        '1_M_N_N_N': 5,
+        '1_M_N_N_N': 10,
         #'2_M_Y_N_N': 0,
         #'9_E_N_N_N': 0,
         '10_E_Y_N_N': 0,
