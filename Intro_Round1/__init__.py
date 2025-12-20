@@ -3,8 +3,6 @@ import random
 from django.utils.safestring import mark_safe
 from common import *
 
-
-
 doc = '''
 This is the first app - the Introduction app. It contains
 1. Demgraphics page
@@ -24,31 +22,32 @@ def get_treatment_part(part, player):
     'i.e. if treatment="T1_Math_men" and part=1, it returns "Math"'
     return player.participant.Treatmentstring.split('_')[part]
 
+
 class C(CommonConstants):
     NAME_IN_URL = 'Introduction'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
-    Round_length = 120 # change to 120
+    Round_length = 120  # change to 120
     Round_length_min = int(Round_length / 60)
-    Timer_text = "Time left to complete this round:"  
-    
+    Timer_text = "Time left to complete this round:"
 
     # Treatment quotas. This will be copied to the session variable.
     MathMemory_pic = 'https://raw.githubusercontent.com/argunaman2022/stereotypes-replication2/master/_static/pics/MathMemory_pic.png'
 
     TOTAL_QUOTAS = {  # For 1,2,9,10 (both genders)
         '1_M_N_N_N': 90,
-        '2_M_Y_N_N': 90,
-        '9_E_N_N_N': 92,
-        '10_E_Y_N_N': 92,
+        '2_M_Y_N_N': 1,
+        '9_E_N_N_N': 4,
+        '10_E_Y_N_N': 2,
     }
     QUOTA_4 = {  # T4 men only
-        '4_M_Y_YM_M': 86,
+        '4_M_Y_YM_M': 4,
     }
 
 
 class Subsession(BaseSubsession):
     pass
+
 
 def creating_session(subsession):
     session = subsession.session
@@ -67,11 +66,11 @@ def creating_session(subsession):
         player.participant.payrule_version = 0
 
         # create and save Group_members to the participant variable
-        
-            
+
 
 class Group(BaseGroup):
     pass
+
 
 class Player(BasePlayer):
     treatment = models.IntegerField()
@@ -79,27 +78,26 @@ class Player(BasePlayer):
     # prolific_id = models.StringField(default=str("None")) #prolific id, will be fetched automatically.
     gender = models.StringField(label='What is your gender identity?',
                                 choices=['Male', 'Female', 'Other', 'Rather not say'], widget=widgets.RadioSelect)
-    age = models.IntegerField( label='How old are you?', min=18, max=99)
+    age = models.IntegerField(label='How old are you?', min=18, max=99)
     country = models.StringField(label='In which country do you live?')
     job = models.StringField(label='What is your employment status?',
-                                choices=['Unemployed', 'Part-time', 'Full-time', 'Student', 'Retired', 'Other'], widget=widgets.RadioSelect)
+                             choices=['Unemployed', 'Part-time', 'Full-time', 'Student', 'Retired', 'Other'],
+                             widget=widgets.RadioSelect)
 
     Bot = models.IntegerField(initial=0)
 
-
-
     Comprehension_password = models.StringField(blank=False,
                                                 label='Password')
-    
-    
+
     browser = models.StringField(
         label='Please enter your browser name and version (e.g. Chrome 100.0.4896.127)',
         blank=True,
     )
     Allowed = models.IntegerField(initial=1)
 
-    Piece_rate = models.IntegerField(initial=0) #correct answers
-    Piece_rate_Attempts = models.IntegerField(initial=0, blank=True) # logs the number of attempts in the math memory game
+    Piece_rate = models.IntegerField(initial=0)  # correct answers
+    Piece_rate_Attempts = models.IntegerField(initial=0,
+                                              blank=True)  # logs the number of attempts in the math memory game
     ai_catch_answer = models.StringField(blank=True, max_length=4)
     honeypot = models.StringField(
         label='Please enter your browser name and version (e.g. Chrome 100.0.4896.127)',
@@ -110,7 +108,7 @@ class Player(BasePlayer):
     # Store card orders for Round 1
     R1_easy_card_order = models.LongStringField(blank=True)
     R1_hard_card_order = models.LongStringField(blank=True)
-    
+
     # Store breakdown scores
     R1_easy_score = models.IntegerField(initial=0)
     R1_hard_score = models.IntegerField(initial=0)
@@ -121,9 +119,9 @@ class Player(BasePlayer):
     blur_log = models.LongStringField(blank=True)
     blur_count = models.IntegerField(initial=0, blank=True)
     blur_warned = models.IntegerField(initial=0, blank=True)
-    
-    
-#%% Functions
+
+
+# %% Functions
 def treatment_assignment(player):
     session = player.subsession.session
 
@@ -164,13 +162,14 @@ def treatment_assignment(player):
     print(f"DEBUG: New quotas: T4={session.Quota_4}, others={session.Total_quotas}")
 
 
-#%% Pages
+# %% Pages
 
-#Consent, Demographics, Introduction, Comprehension checks and attention check 1
+# Consent, Demographics, Introduction, Comprehension checks and attention check 1
 class Welcome(Page):
     pass
 
-class AI_catch(Page):   
+
+class AI_catch(Page):
     form_model = 'player'
     form_fields = ['ai_catch_answer', 'honeypot', 'mouse_data']
 
@@ -192,28 +191,29 @@ class AI_catch(Page):
             player.Allowed = 0
             player.Bot = 1
 
+
 class Aboutyou(Page):
     form_model = 'player'
     form_fields = [
-                'gender',
-                'age',
-                'country',
-                'job',
-                'blur_log',
-                'blur_count',
-                'blur_warned',
-                'browser'
-                ]
-    
+        'gender',
+        'age',
+        'country',
+        'job',
+        'blur_log',
+        'blur_count',
+        'blur_warned',
+        'browser'
+    ]
+
     @staticmethod
     def is_displayed(player: Player):
         return player.Allowed == 1
-        
+
     @staticmethod
     def vars_for_template(player: Player):
 
         return {
-            'hidden_fields': ['blur_log', 'blur_count','blur_warned', 'browser'],
+            'hidden_fields': ['blur_log', 'blur_count', 'blur_warned', 'browser'],
         }
 
     @staticmethod
@@ -234,22 +234,25 @@ class Instructions(MyBasePage):
     def is_displayed(player: Player):
         return player.Allowed == 1
 
+
 class Round_1_instructions(MyBasePage):
 
     @staticmethod
     def is_displayed(player: Player):
         return player.Allowed == 1
 
+
 class Round_1_begin(Page):
     @staticmethod
     def is_displayed(player: Player):
         return player.Allowed == 1
-    
+
+
 class Round_1_play_easy(MyBasePage):
-    extra_fields = ['Piece_rate','Piece_rate_Attempts', 'R1_easy_card_order'] 
+    extra_fields = ['Piece_rate', 'Piece_rate_Attempts', 'R1_easy_card_order']
     form_fields = MyBasePage.form_fields + extra_fields
-    
-    timeout_seconds = C.Round_length/2  # set to 60 later
+
+    timeout_seconds = C.Round_length / 2  # set to 60 later
     timer_text = C.Timer_text
 
     @staticmethod
@@ -271,9 +274,9 @@ class Round_1_play_easy(MyBasePage):
             'treatment_num': player.participant.Treatment,
             'round_index': 1,
             'mix': None,
-            'phase': 'easy',          # NEW
-            'start_value': 0,         # NEW: matches carried-in ImgFound
-            'attempts_start': 0,      # NEW
+            'phase': 'easy',  # NEW
+            'start_value': 0,  # NEW: matches carried-in ImgFound
+            'attempts_start': 0,  # NEW
         }
 
     @staticmethod
@@ -283,6 +286,7 @@ class Round_1_play_easy(MyBasePage):
         player.participant.vars['R1_easy'] = player.Piece_rate
         player.participant.vars['R1_easy_attempts'] = player.Piece_rate_Attempts
 
+
 class Round_1_Transition(MyBasePage):
 
     @staticmethod
@@ -291,10 +295,10 @@ class Round_1_Transition(MyBasePage):
 
 
 class Round_1_play_hard(MyBasePage):
-    extra_fields = ['Piece_rate','Piece_rate_Attempts', 'R1_hard_card_order'] 
+    extra_fields = ['Piece_rate', 'Piece_rate_Attempts', 'R1_hard_card_order']
     form_fields = MyBasePage.form_fields + extra_fields
-    
-    timeout_seconds = C.Round_length/2  # set to 60 later
+
+    timeout_seconds = C.Round_length / 2  # set to 60 later
     timer_text = C.Timer_text
 
     @staticmethod
@@ -318,8 +322,8 @@ class Round_1_play_hard(MyBasePage):
             'treatment_num': player.participant.Treatment,
             'round_index': 1,
             'mix': None,
-            'phase': 'hard',            # NEW
-            'start_value': r1_easy,     # NEW
+            'phase': 'hard',  # NEW
+            'start_value': r1_easy,  # NEW
             'attempts_start': r1_easy_att,  # NEW
         }
 
@@ -328,23 +332,24 @@ class Round_1_play_hard(MyBasePage):
         MyBasePage.before_next_page(player, timeout_happened)
         r1_easy = player.participant.vars.get('R1_easy', 0)
         r1_easy_att = player.participant.vars.get('R1_easy_attempts', 0)
-        
+
         # Store breakdown scores in Player model for database
         player.R1_easy_score = r1_easy
         player.R1_hard_score = player.Piece_rate - r1_easy
         player.R1_easy_attempts = r1_easy_att
         player.R1_hard_attempts = player.Piece_rate_Attempts - r1_easy_att
-        
+
         # Store in participant vars (for display)
         player.participant.vars['R1_hard'] = player.R1_hard_score
         player.participant.vars['R1_hard_attempts'] = player.R1_hard_attempts
-        
+
         # Store total score
         player.participant.R1_score = player.Piece_rate
 
+
 class Practice_Score(MyBasePage):
-    
     pass
+
 
 class ScreenOut(Page):
 
@@ -352,11 +357,13 @@ class ScreenOut(Page):
     def is_displayed(player):
         return player.Allowed == 0 and player.Bot == 0
 
+
 class RejectBot(Page):
 
     @staticmethod
     def is_displayed(player):
         return player.Allowed == 0 and player.Bot == 1
+
 
 class RedirectScreenOut(Page):
 
@@ -370,6 +377,7 @@ class RedirectScreenOut(Page):
             completionlinkscreenout=
             player.subsession.session.config['completionlinkscreenout']
         )
+
 
 class RedirectBot(Page):
 
@@ -394,12 +402,12 @@ page_sequence = [Welcome,
                  Instructions,
                  Round_1_instructions,
                  Round_1_begin,
-                Round_1_play_easy,
-                Round_1_Transition,
-                Round_1_play_hard,
-                 Practice_Score,
+                 # Round_1_play_easy,
+                 #  Round_1_Transition,
+                 # Round_1_play_hard,
+                 # Practice_Score,
                  ScreenOut,
                  RejectBot,
-                    RedirectScreenOut,
+                 RedirectScreenOut,
                  RedirectBot
                  ]

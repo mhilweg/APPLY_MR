@@ -195,6 +195,7 @@ class Player(BasePlayer):
 class Selection_instructions(MyBasePage):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
+        player.treatment = player.participant.Treatment
         player.page_pass_time = time.time() + C.Min_round_length
 
         mix_draw = random.randint(1, 2)
@@ -255,16 +256,19 @@ class SelectionsBegin(MyBasePage):
 
     @staticmethod
     def before_next_page(player, timeout_happened):
-        player.treatment = player.participant.Treatment 
 
-        treatment_num = player.participant.Treatment 
+
         session_players = player.subsession.get_players()
 
-        same_treatment_passed_count = sum(
-            1 for p in session_players
-            if p.participant.vars.get('Treatment') == treatment_num and 
-            p.moved_to_selection == 1
-        )
+        same_treatment_passed_count = 0
+        for p in session_players:
+            # Skip players with no Treatment
+            if 'Treatment' not in p.participant.vars:
+                continue
+            if getattr(p, 'moved_to_selection', 0) != 1:
+                continue
+            if p.treatment == player.treatment:
+                same_treatment_passed_count += 1
 
         player_id = (same_treatment_passed_count % 90) + 1
         player.assigned_id = player_id
@@ -799,8 +803,8 @@ class RedirectIncorrect(Page):
 
 page_sequence = [
     Selection_instructions,
-    Comprehension_Qs,
-    Comprehension_Qs2,
+   # Comprehension_Qs,
+   # Comprehension_Qs2,
     SelectionsBegin,
     Selection1,
     Selection2,
