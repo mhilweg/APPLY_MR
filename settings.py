@@ -8,7 +8,8 @@ SESSION_CONFIGS = [
          app_sequence=[
              'Intro_Round1',
              #'Intro_Round1_P',
-             'Selections'
+             #'Selections',
+             'Selections_F'
          ],
 
          num_demo_participants=2,
